@@ -1,0 +1,305 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Outlander Anniversaire - Amat</title>
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            font-family: 'Arial', sans-serif;
+            background: url('outlander_background.jpg') no-repeat center center fixed;
+            background-size: cover;
+            color: #fff;
+            overflow: hidden;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+        }
+
+        .overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.7);
+            z-index: 1;
+        }
+
+        .loading-screen {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.9);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            z-index: 1000;
+            animation: fadeOut 2s forwards 2s;
+        }
+
+        @keyframes fadeOut {
+            to { opacity: 0; visibility: hidden; }
+        }
+
+        .netflix-container {
+            position: relative;
+            z-index: 2;
+            text-align: center;
+            opacity: 0;
+            animation: fadeIn 1s forwards 2.5s;
+            background: rgba(0, 0, 0, 0.8);
+            padding: 40px;
+            border-radius: 10px;
+            box-shadow: 0 0 20px rgba(229, 9, 20, 0.5);
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .netflix-logo {
+            font-size: 3.5em;
+            font-weight: bold;
+            color: #e50914;
+            margin-bottom: 20px;
+            text-shadow: 0 0 15px rgba(229, 9, 20, 0.8);
+            font-family: 'Georgia', serif;
+        }
+
+        .outlander-title {
+            font-size: 2.8em;
+            color: #e50914;
+            margin-bottom: 30px;
+            text-shadow: 0 0 10px rgba(255, 215, 0, 0.7);
+            font-family: 'Georgia', serif;
+            animation: pulse3D 2s infinite;
+        }
+
+        @keyframes pulse3D {
+            0% { transform: perspective(500px) rotateX(0deg) scale(1); }
+            50% { transform: perspective(500px) rotateX(10deg) scale(1.05); }
+            100% { transform: perspective(500px) rotateX(0deg) scale(1); }
+        }
+
+        .button {
+            background: linear-gradient(45deg, #e50914, #b20710);
+            color: #fff;
+            padding: 15px 35px;
+            border: none;
+            border-radius: 5px;
+            font-size: 1.3em;
+            cursor: pointer;
+            margin: 10px;
+            transition: transform 0.3s, background 0.3s, box-shadow 0.3s;
+            font-family: 'Arial', sans-serif;
+            box-shadow: 0 5px 15px rgba(229, 9, 20, 0.3);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .button::before {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            width: 200%;
+            height: 200%;
+            background: rgba(255, 255, 255, 0.2);
+            transform: translate(-50%, -50%) scale(0);
+            border-radius: 50%;
+            animation: glow 2s infinite;
+        }
+
+        @keyframes glow {
+            0% { transform: translate(-50%, -50%) scale(0); opacity: 0; }
+            50% { transform: translate(-50%, -50%) scale(1); opacity: 0.5; }
+            100% { transform: translate(-50%, -50%) scale(0); opacity: 0; }
+        }
+
+        .button:hover {
+            background: linear-gradient(45deg, #b20710, #8a0508);
+            transform: scale(1.1);
+            box-shadow: 0 8px 20px rgba(229, 9, 20, 0.5);
+        }
+
+        .message {
+            font-size: 1.6em;
+            margin-top: 20px;
+            opacity: 0;
+            transition: opacity 1s, transform 1s;
+            font-family: 'Georgia', serif;
+            color: #ffd700;
+            text-shadow: 0 0 10px rgba(255, 215, 0, 0.7);
+        }
+
+        .message.active {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .confetti {
+            position: absolute;
+            width: 10px;
+            height: 10px;
+            background: linear-gradient(45deg, #e50914, #ffd700);
+            border-radius: 50%;
+            animation: fall 3s linear infinite;
+        }
+
+        @keyframes fall {
+            0% { top: -10px; opacity: 0; }
+            50% { opacity: 1; }
+            100% { top: 100vh; opacity: 0; }
+        }
+
+        .timeline {
+            margin-top: 30px;
+            font-size: 1.2em;
+            color: #fff;
+        }
+
+        .character-image {
+            max-width: 200px;
+            margin: 20px auto;
+            border: 5px solid #e50914;
+            border-radius: 10px;
+            opacity: 0;
+            animation: fadeInImage 1s forwards 3s;
+        }
+
+        @keyframes fadeInImage {
+            from { opacity: 0; transform: scale(0.8); }
+            to { opacity: 1; transform: scale(1); }
+        }
+
+        /* Effet de portail temporel */
+        .portal {
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            width: 0;
+            height: 0;
+            background: radial-gradient(circle, rgba(229, 9, 20, 0.8), rgba(0, 0, 0, 0));
+            border-radius: 50%;
+            z-index: 999;
+            transform: translate(-50%, -50%);
+            pointer-events: none;
+        }
+
+        .portal.active {
+            animation: portalOpen 2s forwards;
+        }
+
+        @keyframes portalOpen {
+            0% { width: 0; height: 0; opacity: 1; }
+            50% { width: 800px; height: 800px; opacity: 0.8; }
+            100% { width: 1000px; height: 1000px; opacity: 0; }
+        }
+
+        /* Particules magiques */
+        .particle {
+            position: absolute;
+            width: 5px;
+            height: 5px;
+            background: #ffd700;
+            border-radius: 50%;
+            animation: float 5s infinite ease-in-out;
+        }
+
+        @keyframes float {
+            0% { transform: translateY(0); opacity: 0.5; }
+            50% { transform: translateY(-50px); opacity: 1; }
+            100% { transform: translateY(0); opacity: 0.5; }
+        }
+    </style>
+</head>
+<body>
+    <div class="overlay"></div>
+    <div class="loading-screen">
+        <h1 style="font-size: 2em; color: #e50914;">Voyage dans le temps pour les 41 ans...</h1>
+    </div>
+
+    <div class="netflix-container">
+        <div class="netflix-logo">Outlander Anniversaire</div>
+        <h1 class="outlander-title">Joyeux 41e Anniversaire, Amat !</h1>
+        <p class="timeline">18e siècle, Écosse : Un voyage spécial pour célébrer tes 41 ans !</p>
+        <img src="outlander_background2.jpg" alt="Amat en Outlander" class="character-image">
+        <button class="button" onclick="showMessage('message1'); openPortal(); playSound('portal_sound.mp3')">Ouvrir le portail temporel</button>
+        <button class="button" onclick="showMessage('message2'); playSound('scottish_wish.mp3')">Recevoir le vœu écossais</button>
+        <button class="button" onclick="showConfetti(); playSound('fire_sound.mp3')">Lancer les feux celtiques !</button>
+        <div id="message1" class="message">Amat, que ce voyage dans le temps t’apporte joie, courage et amour, comme Claire et Jamie ! Que ton 41e anniversaire soit légendaire, comme une aventure d’Outlander ! 🎉</div>
+        <div id="message2" class="message">Sur les terres d’Écosse, nous te souhaitons un joyeux 41e anniversaire, Amat ! Que chaque année te transporte vers de nouveaux horizons magiques. Slàinte Mhath ! 🏴</div>
+    </div>
+
+    <script>
+        // Effet sonore au chargement
+        window.addEventListener('load', function() {
+            const audio = new Audio('outlander_sound.mp3');
+            audio.play().catch(error => console.log("Erreur de lecture audio :", error));
+            spawnParticles();
+        });
+
+        // Fonction pour jouer un son
+        function playSound(soundFile) {
+            const audio = new Audio(soundFile);
+            audio.play().catch(error => console.log("Erreur de lecture audio :", error));
+        }
+
+        // Fonction pour afficher les messages
+        function showMessage(messageId) {
+            const messages = document.querySelectorAll('.message');
+            messages.forEach(msg => {
+                msg.classList.remove('active');
+                msg.style.transform = 'translateY(20px)';
+            });
+            const selectedMessage = document.getElementById(messageId);
+            selectedMessage.classList.add('active');
+            selectedMessage.style.transform = 'translateY(0)';
+        }
+
+        // Fonction pour générer des confettis
+        function showConfetti() {
+            for (let i = 0; i < 100; i++) {
+                const confetti = document.createElement('div');
+                confetti.className = 'confetti';
+                confetti.style.left = Math.random() * 100 + 'vw';
+                confetti.style.background = `linear-gradient(45deg, hsl(${Math.random() * 360}, 70%, 50%), hsl(${Math.random() * 360}, 70%, 30%))`;
+                confetti.style.animationDelay = Math.random() * 2 + 's';
+                document.body.appendChild(confetti);
+                setTimeout(() => confetti.remove(), 3000);
+            }
+        }
+
+        // Fonction pour ouvrir le portail temporel
+        function openPortal() {
+            const portal = document.createElement('div');
+            portal.className = 'portal';
+            document.body.appendChild(portal);
+            setTimeout(() => portal.classList.add('active'), 10);
+            setTimeout(() => portal.remove(), 2000);
+        }
+
+        // Fonction pour générer des particules magiques
+        function spawnParticles() {
+            for (let i = 0; i < 20; i++) {
+                const particle = document.createElement('div');
+                particle.className = 'particle';
+                particle.style.left = Math.random() * 100 + 'vw';
+                particle.style.top = Math.random() * 100 + 'vh';
+                particle.style.animationDelay = Math.random() * 5 + 's';
+                document.body.appendChild(particle);
+            }
+        }
+
+        // Ajout de confettis automatiques au chargement
+        setTimeout(showConfetti, 3000);
+    </script>
+</body>
+</html>
