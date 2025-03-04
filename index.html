@@ -166,6 +166,10 @@
             100% { width: clamp(300px, 80vw, 800px); height: clamp(300px, 80vw, 800px); opacity: 0; }
         }
 
+        #youtube-player {
+            display: none; /* Caché car on veut juste le son */
+        }
+
         @media (max-width: 768px) {
             .button-container {
                 flex-direction: column;
@@ -206,12 +210,52 @@
             <button class="button" onclick="showMessage('message1'); openPortal(); playSound('portal_sound.mp3')">Ouvrir le portail temporel</button>
             <button class="button" onclick="showMessage('message2'); playSound('scottish_wish.mp3')">Vœu écossais</button>
             <button class="button" onclick="showConfetti(); playSound('fire_sound.mp3')">Feux celtiques</button>
+            <button class="button" onclick="playYouTubeVideo()">Jouer la musique Outlander</button>
         </div>
         <div id="message1" class="message">Amat, que ce voyage dans le temps t’apporte joie, courage et amour, comme Claire et Jamie ! Que ton 41e anniversaire soit légendaire !</div>
         <div id="message2" class="message">Sur les terres d’Écosse, nous te souhaitons un joyeux 41e anniversaire ! Slàinte Mhath !</div>
     </div>
 
+    <!-- Conteneur pour le lecteur YouTube -->
+    <div id="youtube-player"></div>
+
+    <script src="https://www.youtube.com/iframe_api"></script>
     <script>
+        let player;
+
+        // Initialisation de l'API YouTube
+        function onYouTubeIframeAPIReady() {
+            player = new YT.Player('youtube-player', {
+                height: '0', // Hauteur 0 car on veut juste le son
+                width: '0',  // Largeur 0 car on veut juste le son
+                videoId: 'YQ3uNTd4KtI', // ID de la vidéo YouTube
+                playerVars: {
+                    'autoplay': 0, // Ne joue pas automatiquement
+                    'controls': 0, // Pas de contrôles visibles
+                    'loop': 1,     // Boucle
+                    'playlist': 'YQ3uNTd4KtI' // Nécessaire pour la boucle
+                },
+                events: {
+                    'onReady': onPlayerReady
+                }
+            });
+        }
+
+        function onPlayerReady(event) {
+            // Le lecteur est prêt, mais on ne fait rien tant que le bouton n'est pas cliqué
+            player.setVolume(30); // Volume à 30%
+        }
+
+        function playYouTubeVideo() {
+            if (player && player.playVideo) {
+                player.playVideo();
+            }
+        }
+
+        window.addEventListener('load', () => {
+            setTimeout(showConfetti, 3000);
+        });
+
         function playSound(soundFile) {
             const audio = new Audio(soundFile);
             audio.play().catch(error => console.log("Erreur audio:", error));
@@ -250,12 +294,7 @@
             setTimeout(() => portal.remove(), 1500);
         }
 
-        window.addEventListener('load', () => {
-            playSound('outlander_sound.mp3');
-            setTimeout(showConfetti, 3000);
-        });
-
-        // Définition de l'animation confetti dans JS pour plus de contrôle
+        // Définition de l'animation confetti
         const style = document.createElement('style');
         style.textContent = `
             @keyframes fall {
