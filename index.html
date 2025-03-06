@@ -217,40 +217,39 @@
             0% { transform: translate(-50%, -50%) rotate(0deg); }
             100% { transform: translate(-50%, -50%) rotate(360deg); }
         }
+/* Portal Text */
+.portal-text-right {
+    position: absolute;
+    top: 50%;
+    right: 4%;
+    transform: translateY(-50%);
+    max-width: clamp(200px, 30vw, 280px);
+    text-align: center;
+    background: rgba(0, 0, 0, 0.6);
+    padding: 15px;
+    border-radius: 10px;
+    box-shadow: 0 0 20px rgba(0, 191, 255, 0.8);
+    color: #ffffff;
+    z-index: 2;
+    animation: fadeInRight 2s ease-in-out;
+}
 
-        /* Portal Text */
-        .portal-text-right {
-            position: absolute;
-            top: 50%;
-            right: 4%;
-            transform: translateY(-50%);
-            max-width: clamp(200px, 30vw, 280px);
-            text-align: center;
-            background: rgba(0, 0, 0, 0.6);
-            padding: 15px;
-            border-radius: 10px;
-            box-shadow: 0 0 20px rgba(0, 191, 255, 0.8);
-            color: #ffffff;
-            z-index: 2;
-            animation: fadeInRight 2s ease-in-out;
-        }
+.portal-text-right h2 {
+    font-size: clamp(18px, 5vw, 24px);
+    margin-bottom: 12px;
+    color: #00bfff;
+    font-weight: bold;
+}
 
-        .portal-text-right h2 {
-            font-size: clamp(18px, 5vw, 24px);
-            margin-bottom: 12px;
-            color: #00bfff;
-            font-weight: bold;
-        }
+.portal-text-right p {
+    font-size: clamp(12px, 3vw, 15px);
+    line-height: 1.4;
+}
 
-        .portal-text-right p {
-            font-size: clamp(12px, 3vw, 15px);
-            line-height: 1.4;
-        }
-
-        @keyframes fadeInRight {
-            0% { opacity: 0; transform: translate(30px, -50%); }
-            100% { opacity: 1; transform: translate(0, -50%); }
-        }
+@keyframes fadeInRight {
+    0% { opacity: 0; transform: translate(30px, -50%); }
+    100% { opacity: 1; transform: translate(0, -50%); }
+}
 
         /* Special Message */
         .special-message {
@@ -350,38 +349,50 @@
             100% { transform: rotate(2deg); }
         }
 
-        /* Media Queries */
-        @media (max-width: 768px) {
-            .intro-screen h1 { font-size: clamp(20px, 6vw, 32px); }
-            .intro-btn { padding: 10px 20px; }
-            .header { flex-direction: column; padding: 10px; }
-            .header img { height: clamp(40px, 8vw, 60px); }
-            .logo { margin-right: 0; margin-bottom: 10px; }
-            .hero-content { padding-bottom: 100px; } /* Adjusted padding for smaller screens */
-            .hero-content h1 { font-size: clamp(24px, 6vw, 32px); }
-            .hero-content p { font-size: clamp(12px, 3vw, 14px); }
-            .buttons { flex-direction: column; gap: 10px; }
-            .portal-text-right { max-width: clamp(150px, 25vw, 200px); font-size: clamp(10px, 3vw, 13px); }
-            .time-portal { width: clamp(150px, 40vw, 300px); height: clamp(150px, 40vw, 300px); }
-            .portal-open { width: clamp(200px, 60vw, 500px) !important; height: clamp(200px, 60vw, 500px) !important; }
-            .card { min-width: clamp(120px, 20vw, 150px); height: clamp(160px, 30vw, 200px); }
-            .special-message { bottom: 10px; font-size: clamp(12px, 3vw, 14px); }
-        }
+/* Media Queries */
+@media (max-width: 768px) {
+    .intro-screen h1 { font-size: clamp(20px, 6vw, 32px); }
+    .intro-btn { padding: 10px 20px; }
+    .header { flex-direction: column; padding: 10px; }
+    .header img { height: clamp(40px, 8vw, 60px); }
+    .logo { margin-right: 0; margin-bottom: 10px; }
+    .hero-content { padding-bottom: 100px; }
+    .hero-content h1 { font-size: clamp(24px, 6vw, 32px); }
+    .hero-content p { font-size: clamp(12px, 3vw, 14px); }
+    .buttons { flex-direction: column; gap: 10px; }
+    .portal-text-right {
+        top: 20%; /* Move it above the buttons */
+        right: 50%;
+        transform: translateX(50%); /* Center it horizontally */
+        max-width: clamp(150px, 50vw, 200px);
+        font-size: clamp(10px, 3vw, 13px);
+    }
+    .time-portal { width: clamp(150px, 40vw, 300px); height: clamp(150px, 40vw, 300px); }
+    .portal-open { width: clamp(200px, 60vw, 500px) !important; height: clamp(200px, 60vw, 500px) !important; }
+    .card { min-width: clamp(120px, 20vw, 150px); height: clamp(160px, 30vw, 200px); }
+    .special-message { bottom: 10px; font-size: clamp(12px, 3vw, 14px); }
+}
 
-        @media (max-width: 480px) {
-            .intro-screen h1 { font-size: clamp(18px, 5vw, 24px); }
-            .intro-btn { font-size: clamp(14px, 4vw, 16px); }
-            .hero-content { padding-bottom: 80px; } /* Further adjusted for mobile */
-            .hero-content h1 { font-size: clamp(20px, 5vw, 28px); }
-            .hero-content p { font-size: clamp(10px, 3vw, 12px); }
-            .btn { padding: 8px 16px; font-size: clamp(12px, 3vw, 14px); }
-            .portal-text-right { max-width: clamp(120px, 20vw, 150px); }
-            .time-portal { width: clamp(100px, 30vw, 200px); height: clamp(100px, 30vw, 200px); }
-            .portal-open { width: clamp(150px, 50vw, 300px) !important; height: clamp(150px, 50vw, 300px) !important; }
-            .special-message { font-size: clamp(10px, 3vw, 12px); padding: 10px; bottom: 5px; }
-            .content-row h2 { font-size: clamp(16px, 5vw, 20px); }
-            .card { min-width: clamp(100px, 20vw, 120px); height: clamp(140px, 25vw, 160px); }
-        }
+@media (max-width: 480px) {
+    .intro-screen h1 { font-size: clamp(18px, 5vw, 24px); }
+    .intro-btn { font-size: clamp(14px, 4vw, 16px); }
+    .hero-content { padding-bottom: 80px; }
+    .hero-content h1 { font-size: clamp(20px, 5vw, 28px); }
+    .hero-content p { font-size: clamp(10px, 3vw, 12px); }
+    .btn { padding: 8px 16px; font-size: clamp(12px, 3vw, 14px); }
+    .portal-text-right {
+        top: 15%; /* Further adjust for smaller screens */
+        right: 50%;
+        transform: translateX(50%);
+        max-width: clamp(120px, 60vw, 150px);
+        padding: 10px;
+    }
+    .time-portal { width: clamp(100px, 30vw, 200px); height: clamp(100px, 30vw, 200px); }
+    .portal-open { width: clamp(150px, 50vw, 300px) !important; height: clamp(150px, 50vw, 300px) !important; }
+    .special-message { font-size: clamp(10px, 3vw, 12px); padding: 10px; bottom: 5px; }
+    .content-row h2 { font-size: clamp(16px, 5vw, 20px); }
+    .card { min-width: clamp(100px, 20vw, 120px); height: clamp(140px, 25vw, 160px); }
+}
     </style>
 </head>
 <body>
