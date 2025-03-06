@@ -7,348 +7,316 @@
     <link rel="icon" type="image/png" href="netflix_logo.png">
     <style>
         /* Reset and Base Styles */
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-            font-family: Arial, sans-serif;
-        }
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: Arial, sans-serif;
+}
 
-        body {
-            background: #141414;
-            color: #fff;
-            overflow-x: hidden;
-            position: relative;
-        }
+body {
+    background: #141414;
+    color: #fff;
+    overflow-x: hidden;
+    position: relative;
+}
 
-        /* Intro Screen */
-        .intro-screen {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100vh;
-            background: url('portail1.JPG') center/cover no-repeat;
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-            align-items: center;
-            z-index: 9999;
-            text-align: center;
-            animation: fadeIn 2s;
-        }
+/* Intro Screen */
+.intro-screen {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100vh;
+    background: url('portail1.JPG') center/cover no-repeat;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    z-index: 9999;
+    text-align: center;
+    animation: fadeIn 2s;
+}
 
-        .intro-screen h1 {
-            font-size: clamp(24px, 5vw, 36px);
-            margin-bottom: 20px;
-            text-shadow: 2px 2px 5px #000;
-        }
+.intro-screen h1 {
+    font-size: clamp(24px, 5vw, 36px);
+    margin-bottom: 20px;
+    text-shadow: 2px 2px 5px #000;
+}
 
-        .intro-btn {
-            background: #e50914;
-            color: #fff;
-            padding: 15px 25px;
-            border: none;
-            border-radius: 8px;
-            cursor: pointer;
-            font-size: clamp(16px, 4vw, 18px);
-            transition: transform .3s;
-        }
+.intro-btn {
+    background: #e50914;
+    color: #fff;
+    padding: 15px 25px;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    font-size: clamp(16px, 4vw, 18px);
+    transition: transform .3s;
+}
 
-        .intro-btn:hover {
-            transform: scale(1.1);
-        }
+.intro-btn:hover {
+    transform: scale(1.1);
+}
 
-        @keyframes fadeIn {
-            0% { opacity: 0; }
-            100% { opacity: 1; }
-        }
+@keyframes fadeIn {
+    0% { opacity: 0; }
+    100% { opacity: 1; }
+}
 
-        @keyframes fadeOut {
-            0% { opacity: 1; }
-            100% { opacity: 0; }
-        }
+@keyframes fadeOut {
+    0% { opacity: 1; }
+    100% { opacity: 0; }
+}
 
-        /* Header */
-        .header {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            padding: 10px 4%;
-            background: rgba(0, 0, 0, 0.7);
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            z-index: 100;
-            transition: background .3s;
-        }
+/* Header */
+.header {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    padding: 10px 4%;
+    background: rgba(0, 0, 0, 0.7);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    z-index: 100;
+    transition: background .3s;
+}
 
-        .header.scrolled {
-            background: #000;
-        }
+.header.scrolled {
+    background: #000;
+}
 
-        .header img {
-            height: clamp(50px, 10vw, 75px);
-        }
+.header img {
+    height: clamp(50px, 10vw, 75px);
+}
 
-        .logo {
-            font-size: clamp(20px, 5vw, 32px);
-            color: #e50914;
-            font-weight: bold;
-            margin-right: 20px;
-            text-align: center;
-        }
+.logo {
+    font-size: clamp(20px, 5vw, 32px);
+    color: #e50914;
+    font-weight: bold;
+    margin-right: 20px;
+    text-align: center;
+}
 
-        .nav a {
-            color: #fff;
-            text-decoration: none;
-            margin: 0 10px;
-            font-size: clamp(14px, 3vw, 16px);
-        }
+.nav a {
+    color: #fff;
+    text-decoration: none;
+    margin: 0 10px;
+    font-size: clamp(14px, 3vw, 16px);
+}
 
-        .nav a:hover {
-            color: #b3b3b3;
-        }
+.nav a:hover {
+    color: #b3b3b3;
+}
 
-        /* Hero Section */
-        .hero {
-            height: 100vh;
-            width: 100%;
-            background: url('outlander_background.jpg') no-repeat center/cover;
-            position: relative;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            padding: 0 4%;
-            overflow: hidden;
-        }
+/* Hero Section */
 
-        .hero::after {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: linear-gradient(to top, rgba(20, 20, 20, 0.8), rgba(20, 20, 20, 0.2));
-        }
+.hero {
+    height: 100vh;
+    width: 100%;
+    background: url('outlander_background.jpg') no-repeat center/cover;
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 0 4%;
+    overflow: hidden;
+}
 
-        .hero-content {
-            position: relative;
-            z-index: 2;
-            max-width: 90%;
-            text-align: center;
-            padding-bottom: 120px;
-            margin-right: 20%;
-        }
+.hero::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(to top, rgba(20, 20, 20, 0.8), rgba(20, 20, 20, 0.2));
+}
 
-        .hero-content h1 {
-            font-size: clamp(32px, 8vw, 48px);
-            margin-bottom: 20px;
-            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.7);
-        }
+.hero-content {
+    position: relative;
+    z-index: 2;
+    max-width: 90%;
+    text-align: center;
+    padding-bottom: 120px; /* Increased padding to make space for special-message */
+}
 
-        .hero-content p {
-            font-size: clamp(14px, 4vw, 18px);
-            margin-bottom: 30px;
-            text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.7);
-        }
 
-        .buttons {
-            display: flex;
-            justify-content: center;
-            gap: 15px;
-            flex-wrap: wrap;
-        }
+.hero-content h1 {
+    font-size: clamp(32px, 8vw, 48px);
+    margin-bottom: 20px;
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.7);
+}
 
-        .btn {
-            background: #e50914;
-            color: #fff;
-            padding: 10px 20px;
-            border: none;
-            border-radius: 5px;
-            font-size: clamp(14px, 3vw, 16px);
-            cursor: pointer;
-            transition: transform 0.3s, background 0.3s;
-        }
+.hero-content p {
+    font-size: clamp(14px, 4vw, 18px);
+    margin-bottom: 30px;
+    text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.7);
+}
 
-        .btn:hover {
-            background: #f40612;
-            transform: scale(1.1);
-        }
+.buttons {
+    display: flex;
+    justify-content: center;
+    gap: 15px;
+    flex-wrap: wrap;
+}
 
-        /* Time Portal */
-        .time-portal {
-            position: absolute;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%);
-            width: clamp(200px, 50vw, 500px);
-            height: clamp(200px, 50vw, 500px);
-            border-radius: 50%;
-            background: radial-gradient(circle, rgba(0, 191, 255, 0.5), rgba(0, 0, 0, 0));
-            background-image: url('portail.JPG');
-            background-size: cover;
-            z-index: 0;
-            opacity: 0.6;
-            transition: width 1s, height 1s, opacity 1s;
-            animation: portal-glow 2s infinite alternate;
-        }
+.btn {
+    background: #e50914;
+    color: #fff;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 5px;
+    font-size: clamp(14px, 3vw, 16px);
+    cursor: pointer;
+    transition: transform 0.3s, background 0.3s;
+}
 
-        @keyframes portal-glow {
-            0% { box-shadow: 0 0 20px rgba(0, 191, 255, 0.8); }
-            100% { box-shadow: 0 0 50px rgba(0, 191, 255, 1); }
-        }
+.btn:hover {
+    background: #f40612;
+    transform: scale(1.1);
+}
 
-        .portal-open {
-            width: clamp(300px, 80vw, 800px) !important;
-            height: clamp(300px, 80vw, 800px) !important;
-            opacity: 1 !important;
-            box-shadow: 0 0 150px rgba(0, 191, 255, 1), 0 0 80px rgba(255, 255, 255, 0.8);
-            animation: portal-open-anim 1.5s ease-out, portal-spin 3s infinite linear;
-        }
-
-        @keyframes portal-open-anim {
-            0% { width: clamp(200px, 50vw, 500px); height: clamp(200px, 50vw, 500px); opacity: 0.6; }
-            100% { width: clamp(300px, 80vw, 800px); height: clamp(300px, 80vw, 800px); opacity: 1; }
-        }
-
-        @keyframes portal-spin {
-            0% { transform: translate(-50%, -50%) rotate(0deg); }
-            100% { transform: translate(-50%, -50%) rotate(360deg); }
-        }
-/* Portal Text */
-.portal-text-right {
+/* Time Portal */
+.time-portal {
     position: absolute;
     top: 50%;
-    right: 4%;
-    transform: translateY(-50%);
-    max-width: clamp(200px, 30vw, 280px);
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: clamp(200px, 50vw, 500px);
+    height: clamp(200px, 50vw, 500px);
+    border-radius: 50%;
+    background: radial-gradient(circle, rgba(0, 191, 255, 0.5), rgba(0, 0, 0, 0));
+    background-image: url('portail.JPG');
+    background-size: cover;
+    z-index: 0;
+    opacity: 0.6;
+    transition: width 1s, height 1s, opacity 1s;
+    animation: portal-glow 2s infinite alternate;
+}
+
+@keyframes portal-glow {
+    0% { box-shadow: 0 0 20px rgba(0, 191, 255, 0.8); }
+    100% { box-shadow: 0 0 50px rgba(0, 191, 255, 1); }
+}
+
+.portal-open {
+    width: clamp(300px, 80vw, 800px) !important;
+    height: clamp(300px, 80vw, 800px) !important;
+    opacity: 1 !important;
+    box-shadow: 0 0 150px rgba(0, 191, 255, 1), 0 0 80px rgba(255, 255, 255, 0.8);
+    animation: portal-open-anim 1.5s ease-out, portal-spin 3s infinite linear;
+}
+
+@keyframes portal-open-anim {
+    0% { width: clamp(200px, 50vw, 500px); height: clamp(200px, 50vw, 500px); opacity: 0.6; }
+    100% { width: clamp(300px, 80vw, 800px); height: clamp(300px, 80vw, 800px); opacity: 1; }
+}
+
+@keyframes portal-spin {
+    0% { transform: translate(-50%, -50%) rotate(0deg); }
+    100% { transform: translate(-50%, -50%) rotate(360deg); }
+}
+
+/* Special Message */
+.special-message {
+    position: absolute;
+    bottom: 20px;
+    left: 50%;
+    transform: translateX(-50%);
+    max-width: 90%;
+    width: clamp(300px, 80%, 550px);
     text-align: center;
-    background: rgba(0, 0, 0, 0.6);
+    background: rgba(0, 0, 0, 0.7);
     padding: 15px;
-    border-radius: 10px;
-    box-shadow: 0 0 20px rgba(0, 191, 255, 0.8);
+    border-radius: 12px;
+    box-shadow: 0 0 20px rgba(229, 9, 20, 0.8);
     color: #ffffff;
+    font-size: clamp(14px, 4vw, 17px);
     z-index: 2;
-    animation: fadeInRight 2s ease-in-out;
+    display: none;
+    animation: fadeInUp 1s ease-in-out;
 }
 
-.portal-text-right h2 {
-    font-size: clamp(18px, 5vw, 24px);
-    margin-bottom: 12px;
-    color: #00bfff;
+@keyframes fadeInUp {
+    0% { opacity: 0; transform: translate(-50%, 20px); }
+    100% { opacity: 1; transform: translate(-50%, 0); }
+}
+
+/* Content Rows */
+.content-row {
+    padding: 20px 4%;
+}
+
+.content-row h2 {
+    font-size: clamp(20px, 6vw, 24px);
+    margin-bottom: 15px;
+    text-align: center;
+}
+
+.row {
+    display: flex;
+    overflow-x: auto;
+    gap: 10px;
+    padding-bottom: 20px;
+    justify-content: center;
+}
+
+.row::-webkit-scrollbar {
+    display: none;
+}
+
+.card {
+    min-width: clamp(150px, 25vw, 200px);
+    height: clamp(200px, 40vw, 300px);
+    background: #333;
+    border-radius: 5px;
+    overflow: hidden;
+    position: relative;
+    transition: transform 0.3s;
+}
+
+.card:hover {
+    transform: scale(1.1);
+    z-index: 10;
+}
+
+.card img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+/* Funny Text */
+.funny-text {
+    text-align: center;
+    font-size: clamp(14px, 4vw, 18px);
+    margin: 15px auto;
+    color: #e50914;
+    font-style: italic;
+    animation: bounce 1.5s infinite alternate;
+}
+
+@keyframes bounce {
+    from { transform: translateY(0px); }
+    to { transform: translateY(-10px); }
+}
+
+.funny-choice {
+    text-align: center;
+    font-size: clamp(16px, 4vw, 19px);
+    color: #e50914;
+    margin-top: 20px;
     font-weight: bold;
+    animation: funnyShake 2s infinite alternate;
 }
 
-.portal-text-right p {
-    font-size: clamp(12px, 3vw, 15px);
-    line-height: 1.4;
+@keyframes funnyShake {
+    0% { transform: rotate(-2deg); }
+    100% { transform: rotate(2deg); }
 }
-
-@keyframes fadeInRight {
-    0% { opacity: 0; transform: translate(30px, -50%); }
-    100% { opacity: 1; transform: translate(0, -50%); }
-}
-
-        /* Special Message */
-        .special-message {
-            position: absolute;
-            bottom: 20px; /* Adjusted to ensure it stays at the bottom */
-            left: 50%;
-            transform: translateX(-50%);
-            max-width: 90%;
-            width: clamp(300px, 80%, 550px);
-            text-align: center;
-            background: rgba(0, 0, 0, 0.7);
-            padding: 15px;
-            border-radius: 12px;
-            box-shadow: 0 0 20px rgba(229, 9, 20, 0.8);
-            color: #ffffff;
-            font-size: clamp(14px, 4vw, 17px);
-            z-index: 2;
-            display: none;
-            animation: fadeInUp 1s ease-in-out;
-        }
-
-        @keyframes fadeInUp {
-            0% { opacity: 0; transform: translate(-50%, 20px); }
-            100% { opacity: 1; transform: translate(-50%, 0); }
-        }
-
-        /* Content Rows */
-        .content-row {
-            padding: 20px 4%;
-        }
-
-        .content-row h2 {
-            font-size: clamp(20px, 6vw, 24px);
-            margin-bottom: 15px;
-            text-align: center;
-        }
-
-        .row {
-            display: flex;
-            overflow-x: auto;
-            gap: 10px;
-            padding-bottom: 20px;
-            justify-content: center;
-        }
-
-        .row::-webkit-scrollbar {
-            display: none;
-        }
-
-        .card {
-            min-width: clamp(150px, 25vw, 200px);
-            height: clamp(200px, 40vw, 300px);
-            background: #333;
-            border-radius: 5px;
-            overflow: hidden;
-            position: relative;
-            transition: transform 0.3s;
-        }
-
-        .card:hover {
-            transform: scale(1.1);
-            z-index: 10;
-        }
-
-        .card img {
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
-        }
-
-        /* Funny Text */
-        .funny-text {
-            text-align: center;
-            font-size: clamp(14px, 4vw, 18px);
-            margin: 15px auto;
-            color: #e50914;
-            font-style: italic;
-            animation: bounce 1.5s infinite alternate;
-        }
-
-        @keyframes bounce {
-            from { transform: translateY(0px); }
-            to { transform: translateY(-10px); }
-        }
-
-        .funny-choice {
-            text-align: center;
-            font-size: clamp(16px, 4vw, 19px);
-            color: #e50914;
-            margin-top: 20px;
-            font-weight: bold;
-            animation: funnyShake 2s infinite alternate;
-        }
-
-        @keyframes funnyShake {
-            0% { transform: rotate(-2deg); }
-            100% { transform: rotate(2deg); }
-        }
 
 /* Media Queries */
 @media (max-width: 768px) {
@@ -357,20 +325,11 @@
     .header { flex-direction: column; padding: 10px; }
     .header img { height: clamp(40px, 8vw, 60px); }
     .logo { margin-right: 0; margin-bottom: 10px; }
-    .hero-content { padding-bottom: 150px; padding-top: 20px; } /* Adjust padding for space below */
+    .hero-content { padding-bottom: 100px; } /* Adjusted for tablet */
     .hero-content h1 { font-size: clamp(24px, 6vw, 32px); }
     .hero-content p { font-size: clamp(12px, 3vw, 14px); }
     .buttons { flex-direction: column; gap: 10px; }
-    .btn { font-size: clamp(12px, 3vw, 14px); } /* Slightly smaller font for buttons */
-    .portal-text-right {
-        top: auto;
-        bottom: 10%; /* Move to bottom */
-        right: 50%;
-        transform: translateX(50%);
-        max-width: clamp(150px, 50vw, 200px);
-        font-size: clamp(10px, 3vw, 13px);
-        padding: 10px;
-    }
+    .btn { font-size: clamp(12px, 3vw, 14px); }
     .time-portal { width: clamp(150px, 40vw, 300px); height: clamp(150px, 40vw, 300px); }
     .portal-open { width: clamp(200px, 60vw, 500px) !important; height: clamp(200px, 60vw, 500px) !important; }
     .card { min-width: clamp(120px, 20vw, 150px); height: clamp(160px, 30vw, 200px); }
@@ -380,22 +339,10 @@
 @media (max-width: 480px) {
     .intro-screen h1 { font-size: clamp(18px, 5vw, 24px); }
     .intro-btn { font-size: clamp(14px, 4vw, 16px); }
-    .hero-content { padding-bottom: 180px; padding-top: 20px; } /* More space for portal text below */
+    .hero-content { padding-bottom: 80px; } /* Adjusted for mobile */
     .hero-content h1 { font-size: clamp(20px, 5vw, 28px); }
     .hero-content p { font-size: clamp(10px, 3vw, 12px); }
-    .btn { 
-        padding: 8px 16px; 
-        font-size: clamp(10px, 2.5vw, 12px); /* Smaller font size for buttons */
-    }
-    .portal-text-right {
-        top: auto;
-        bottom: 5%; /* Slightly higher to avoid special message */
-        right: 50%;
-        transform: translateX(50%);
-        max-width: clamp(120px, 60vw, 150px);
-        padding: 8px;
-        font-size: clamp(8px, 2.5vw, 10px);
-    }
+    .btn { padding: 8px 16px; font-size: clamp(10px, 2.5vw, 12px); }
     .time-portal { width: clamp(100px, 30vw, 200px); height: clamp(100px, 30vw, 200px); }
     .portal-open { width: clamp(150px, 50vw, 300px) !important; height: clamp(150px, 50vw, 300px) !important; }
     .special-message { font-size: clamp(10px, 3vw, 12px); padding: 10px; bottom: 5px; }
@@ -419,10 +366,6 @@
 
     <section class="hero">
         <div class="time-portal" id="portal"></div>
-        <div class="portal-text-right">
-            <h2>Traverse le Portail Temporel</h2>
-            <p>Prépare-toi à découvrir les mystères et aventures des Highlands en compagnie de Claire et Jamie !</p>
-        </div>
         <div class="hero-content">
             <h1>Outlander</h1>
             <p>Amat, traverse le portail du temps vers l'Écosse de 1743 avec Claire et Jamie pour ton anniversaire !</p>
