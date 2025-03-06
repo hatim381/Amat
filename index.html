@@ -7,15 +7,69 @@
     <link rel="icon" type="image/png" href="netflix_logo.png">
     <style>
 
-        @media (max-width: 768px) {
-            .hero-content h1 { font-size: 32px; }
-            .hero-content p { font-size: 14px; }
-            .buttons { flex-direction: column; gap: 10px; }
-            .portal-text-right { max-width: 200px; font-size: 13px; }
-            .amat-photo-container { width: 150px; height: 150px; }
-            .time-portal { width: 300px; height: 300px; }
-            .time-portal.portal-open { width: 500px; height: 500px; }
-        }
+/* Généralités responsive */
+@media (max-width: 1024px) {
+    .hero-content h1 { font-size: 40px; }
+    .hero-content p { font-size: 16px; }
+    .portal-text-right { max-width: 240px; font-size: 14px; right: 3%; }
+    .amat-photo-container { width: 180px; height: 180px; }
+    .time-portal { width: 350px; height: 350px; }
+    .time-portal.portal-open { width: 600px; height: 600px; }
+    .special-message { bottom: 40px; }
+}
+
+@media (max-width: 768px) {
+    .hero-content h1 { font-size: 32px; }
+    .hero-content p { font-size: 14px; }
+    .buttons { flex-direction: column; gap: 10px; }
+    .portal-text-right { max-width: 200px; font-size: 13px; display:none; }
+    .amat-photo-container { width: 140px; height: 140px; top:70%; right:50%; transform: translate(50%, -50%); }
+    .time-portal { width: 280px; height: 280px; }
+    .time-portal.portal-open { width: 450px; height: 450px; }
+    .header img { height: 60px; }
+    .logo { font-size: 20px; margin-right: 10px; }
+    .special-message { font-size:15px; padding:10px; width:95%; bottom:20px; }
+}
+
+@media (max-width: 480px) {
+    .hero { height: auto; padding: 120px 4% 40px; }
+    .hero-content h1 { font-size: 28px; }
+    .hero-content p { font-size: 13px; }
+    .amat-photo-container { display:none; }
+    .time-portal { width: 220px; height: 220px; }
+    .time-portal.portal-open { width: 300px; height: 300px; }
+    .buttons { gap: 8px; }
+    .btn { padding: 10px 15px; font-size: 14px; }
+    .special-message { bottom:10px; font-size:13px; }
+    .header { flex-direction: column; gap: 5px; }
+    .logo { font-size: 20px; text-align:center; margin-right:0; }
+    .header img { height: 45px; margin-top:5px; }
+    .nav { display: none; }
+}
+
+/* Optimisation images/cards sur mobile */
+@media (max-width: 768px) {
+    .row { flex-direction: column; align-items: center; gap: 15px; }
+    .card { width: 80%; }
+    .content-row h2 { font-size: 20px; }
+}
+
+@media (max-width: 480px) {
+    .card { width: 95%; }
+    .content-row h2 { font-size: 18px; }
+}
+
+/* Ajustement intro-screen sur petits écrans */
+@media (max-width: 480px) {
+    .intro-screen h1 { font-size: 24px; padding: 0 10px; }
+    .intro-btn { padding: 12px 20px; font-size: 16px; }
+}
+
+/* Ajustement header/logo pour très petits écrans */
+@media (max-width: 480px) {
+    .header img { height: 60px; }
+    .logo { font-size: 20px; margin-right: 0; }
+}
 
 
         /* Intro Screen */
