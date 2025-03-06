@@ -20,6 +20,8 @@
             overflow-x: hidden;
             position: relative;
             min-height: 100vh;
+            display: flex;
+            flex-direction: column;
         }
 
         /* Intro Screen */
@@ -36,14 +38,14 @@
             align-items: center;
             z-index: 9999;
             text-align: center;
-            animation: fadeIn 2s;
             opacity: 1;
-            transition: opacity 2s;
+            transition: opacity 2s ease-out;
         }
 
         .intro-screen.hidden {
             opacity: 0;
-            pointer-events: none; /* Prevents interaction after hiding */
+            visibility: hidden; /* Ensures it’s completely removed from layout */
+            pointer-events: none;
         }
 
         .intro-screen h1 {
@@ -67,14 +69,16 @@
             transform: scale(1.1);
         }
 
-        @keyframes fadeIn {
-            0% { opacity: 0; }
-            100% { opacity: 1; }
+        /* Main Content Wrapper */
+        .content-wrapper {
+            opacity: 0;
+            transition: opacity 1s ease-in;
+            z-index: 1;
+            width: 100%;
         }
 
-        @keyframes fadeOut {
-            0% { opacity: 1; }
-            100% { opacity: 0; }
+        .content-wrapper.visible {
+            opacity: 1;
         }
 
         /* Header */
@@ -88,7 +92,7 @@
             display: flex;
             align-items: center;
             justify-content: space-between;
-            z-index: 1000; /* Ensure header is above main content */
+            z-index: 1000;
             transition: background .3s;
         }
 
@@ -130,7 +134,6 @@
             justify-content: center;
             padding: 0 4%;
             overflow: hidden;
-            z-index: 1; /* Below intro screen initially */
         }
 
         .hero::after {
@@ -148,7 +151,7 @@
             z-index: 2;
             max-width: 90%;
             text-align: center;
-            padding-bottom: 120px; /* Space for special message */
+            padding-bottom: 120px;
         }
 
         .hero-content h1 {
@@ -400,80 +403,85 @@
         <button class="intro-btn" onclick="enterSite()">Oui, je suis prête ! 🚀</button>
     </div>
 
-    <!-- Main Content -->
-    <header class="header">
-        <div class="logo">EVENEMENT DE L'ANNEE ! <br> Joyeux Anniversaire Amat !</div>
-        <img src="netflix_logo.png" alt="Netflix Logo">
-    </header>
+    <!-- Main Content Wrapper -->
+    <div class="content-wrapper" id="content">
+        <header class="header">
+            <div class="logo">EVENEMENT DE L'ANNEE ! <br> Joyeux Anniversaire Amat !</div>
+            <img src="netflix_logo.png" alt="Netflix Logo">
+        </header>
 
-    <section class="hero">
-        <div class="time-portal" id="portal"></div>
-        <div class="portal-text-right">
-            <h2>Traverse le Portail Temporel</h2>
-            <p>Prépare-toi à découvrir les mystères et aventures des Highlands en compagnie de Claire et Jamie !</p>
-        </div>
-        <div class="hero-content">
-            <h1>Outlander</h1>
-            <p>Amat, traverse le portail du temps vers l'Écosse de 1743 avec Claire et Jamie pour ton anniversaire !</p>
-            <div class="buttons">
-                <button class="btn" onclick="showMessage('msg1')">Message de Jamie</button>
-                <button class="btn" onclick="showMessage('msg2')">Message de Claire</button>
-                <button class="btn" onclick="showScottishWish()">Vœu Écossais</button>
-                <button class="btn" onclick="openTimePortal()">Ouvrir le Portail Temporel</button>
+        <section class="hero">
+            <div class="time-portal" id="portal"></div>
+            <div class="portal-text-right">
+                <h2>Traverse le Portail Temporel</h2>
+                <p>Prépare-toi à découvrir les mystères et aventures des Highlands en compagnie de Claire et Jamie !</p>
             </div>
-            <p id="msg1" class="special-message">Joyeux anniversaire, Sassenach ! Que ton jour spécial soit aussi magique que les pierres de Craigh na Dun ! - Jamie</p>
-            <p id="msg2" class="special-message">Amat, que ton anniversaire soit rempli d'amour et d'aventures à travers le temps ! - Claire</p>
-            <p id="wish" class="special-message">Que les anciens esprits écossais te bénissent, Amat ! Que ton année soit aussi riche que les Highlands ! - Slàinte Mhath !</p>
-        </div>
-    </section>
+            <div class="hero-content">
+                <h1>Outlander</h1>
+                <p>Amat, traverse le portail du temps vers l'Écosse de 1743 avec Claire et Jamie pour ton anniversaire !</p>
+                <div class="buttons">
+                    <button class="btn" onclick="showMessage('msg1')">Message de Jamie</button>
+                    <button class="btn" onclick="showMessage('msg2')">Message de Claire</button>
+                    <button class="btn" onclick="showScottishWish()">Vœu Écossais</button>
+                    <button class="btn" onclick="openTimePortal()">Ouvrir le Portail Temporel</button>
+                </div>
+                <p id="msg1" class="special-message">Joyeux anniversaire, Sassenach ! Que ton jour spécial soit aussi magique que les pierres de Craigh na Dun ! - Jamie</p>
+                <p id="msg2" class="special-message">Amat, que ton anniversaire soit rempli d'amour et d'aventures à travers le temps ! - Claire</p>
+                <p id="wish" class="special-message">Que les anciens esprits écossais te bénissent, Amat ! Que ton année soit aussi riche que les Highlands ! - Slàinte Mhath !</p>
+            </div>
+        </section>
 
-    <section class="content-row">
-        <h2>Les DOSSIERS d'Outlander pour Amat</h2>
-        <h2>Vraiment portrait craché de Sassenach !</h2>
-        <div class="row">
-            <div class="card"><img src="amat.JPG" alt="Saison 1"></div>
-            <div class="card"><img src="amat2.JPG" alt="Saison 2"></div>
-            <div class="card"><img src="amat3.JPG" alt="Saison 3"></div>
-        </div>
-    </section>
+        <section class="content-row">
+            <h2>Les DOSSIERS d'Outlander pour Amat</h2>
+            <h2>Vraiment portrait craché de Sassenach !</h2>
+            <div class="row">
+                <div class="card"><img src="amat.JPG" alt="Saison 1"></div>
+                <div class="card"><img src="amat2.JPG" alt="Saison 2"></div>
+                <div class="card"><img src="amat3.JPG" alt="Saison 3"></div>
+            </div>
+        </section>
 
-    <section class="content-row">
-        <h2>Tes héros préférés fêtent ton anniversaire</h2>
-        <div class="row">
-            <div class="card"><img src="anniversaire.JPG" alt="Claire"></div>
-            <div class="card"><img src="anniversaire2.JPG" alt="Jamie"></div>
-            <div class="card"><img src="anniversaire3.JPG" alt="Black Jack"></div>
-            <div class="card"><img src="anniversaire4.JPG" alt="Geillis"></div>
-        </div>
-    </section>
+        <section class="content-row">
+            <h2>Tes héros préférés fêtent ton anniversaire</h2>
+            <div class="row">
+                <div class="card"><img src="anniversaire.JPG" alt="Claire"></div>
+                <div class="card"><img src="anniversaire2.JPG" alt="Jamie"></div>
+                <div class="card"><img src="anniversaire3.JPG" alt="Black Jack"></div>
+                <div class="card"><img src="anniversaire4.JPG" alt="Geillis"></div>
+            </div>
+        </section>
 
-    <section class="content-row">
-        <h2>Un gâteau spécial RAMAZAN et OUTLANDER</h2>
-        <br>
-        <h4 class="funny-text">« Attention Amat, ces gâteaux sont si bons qu'ils pourraient te faire voyager dans le temps... sans portail ! 😄 »</h4>
-        <br>
-        <div class="row">
-            <div class="card"><img src="gateau.JPG" alt="Gâteau spécial Ramadan"></div>
-            <div class="card"><img src="gateau2.JPG" alt="Gâteau spécial Outlander"></div>
-        </div>
-        <p class="funny-choice">« Alors Amat, plutôt Team Ramadan 🌙 ou Team Outlander 🏴 ? Choisis vite, avant qu'ils disparaissent dans un vortex ! 😜 »</p>
-    </section>
+        <section class="content-row">
+            <h2>Un gâteau spécial RAMAZAN et OUTLANDER</h2>
+            <br>
+            <h4 class="funny-text">« Attention Amat, ces gâteaux sont si bons qu'ils pourraient te faire voyager dans le temps... sans portail ! 😄 »</h4>
+            <br>
+            <div class="row">
+                <div class="card"><img src="gateau.JPG" alt="Gâteau spécial Ramadan"></div>
+                <div class="card"><img src="gateau2.JPG" alt="Gâteau spécial Outlander"></div>
+            </div>
+            <p class="funny-choice">« Alors Amat, plutôt Team Ramadan 🌙 ou Team Outlander 🏴 ? Choisis vite, avant qu'ils disparaissent dans un vortex ! 😜 »</p>
+        </section>
+    </div>
 
     <script>
+        // Function to handle intro screen dismissal
         function enterSite() {
             const intro = document.getElementById('intro');
-            intro.style.animation = 'fadeOut 2s forwards';
-            intro.classList.add('hidden'); // Add hidden class immediately
-            setTimeout(() => {
-                intro.style.display = 'none'; // Ensure it’s fully hidden after animation
-            }, 2000);
+            const content = document.getElementById('content');
+            intro.classList.add('hidden');
+            content.classList.add('visible');
+            // Store that intro has been shown to prevent reappearance on refresh
+            localStorage.setItem('introShown', 'true');
         }
 
-        // Ensure intro screen is removed on page load if already clicked (optional fallback)
+        // Check if intro has been shown before on load
         window.addEventListener('load', () => {
             const intro = document.getElementById('intro');
+            const content = document.getElementById('content');
             if (localStorage.getItem('introShown')) {
-                intro.style.display = 'none';
+                intro.classList.add('hidden');
+                content.classList.add('visible');
             }
         });
 
