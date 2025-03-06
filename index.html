@@ -1,483 +1,521 @@
 <!DOCTYPE html>
 <html lang="fr">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Netflix Outlander</title>
-    <link rel="icon" type="image/png" href="netflix_logo.png">
+    <link rel="icon" type="image/png" href="netflix_logo.png" />
     <style>
-        /* Reset and Base Styles */
-* {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
-    font-family: Arial, sans-serif;
-}
+      /******************************************************
+       *                    RESET + BASE
+       ******************************************************/
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+        font-family: Arial, sans-serif;
+      }
+      body {
+        background: #141414;
+        color: #fff;
+        overflow-x: hidden;
+        position: relative;
+      }
 
-body {
-    background: #141414;
-    color: #fff;
-    overflow-x: hidden;
-    position: relative;
-}
+      /******************************************************
+       *                  INTRO SCREEN
+       ******************************************************/
+      .intro-screen {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100vh;
+        background: url("portail1.JPG") center/cover no-repeat;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        z-index: 9999;
+        text-align: center;
+        animation: fadeIn 2s;
+      }
+      .intro-screen h1 {
+        font-size: clamp(24px, 5vw, 36px);
+        margin-bottom: 20px;
+        text-shadow: 2px 2px 5px #000;
+      }
+      .intro-btn {
+        background: #e50914;
+        color: #fff;
+        padding: 15px 25px;
+        border: none;
+        border-radius: 8px;
+        cursor: pointer;
+        font-size: clamp(16px, 4vw, 18px);
+        transition: transform 0.3s;
+      }
+      .intro-btn:hover {
+        transform: scale(1.1);
+      }
+      @keyframes fadeIn {
+        0% { opacity: 0; }
+        100% { opacity: 1; }
+      }
+      @keyframes fadeOut {
+        0% { opacity: 1; }
+        100% { opacity: 0; }
+      }
 
-/* Intro Screen */
-.intro-screen {
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100vh;
-    background: url('portail1.JPG') center/cover no-repeat;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    z-index: 9999;
-    text-align: center;
-    animation: fadeIn 2s;
-}
+      /******************************************************
+       *                     HEADER
+       ******************************************************/
+      .header {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        padding: 10px 4%;
+        background: rgba(0, 0, 0, 0.7);
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        z-index: 100;
+        transition: background 0.3s;
+      }
+      .header.scrolled {
+        background: #000;
+      }
+      .header img {
+        height: clamp(50px, 10vw, 75px);
+      }
+      .logo {
+        font-size: clamp(20px, 5vw, 32px);
+        color: #e50914;
+        font-weight: bold;
+        margin-right: 20px;
+        text-align: center;
+      }
 
-.intro-screen h1 {
-    font-size: clamp(24px, 5vw, 36px);
-    margin-bottom: 20px;
-    text-shadow: 2px 2px 5px #000;
-}
+      /******************************************************
+       *               NOUVELLE HERO SECTION
+       ******************************************************/
+      .hero {
+        width: 100%;
+        min-height: 100vh;
+        background: #141414;
+        display: flex;
+        flex-direction: column; /* image en haut, texte, boutons en bas */
+        align-items: center;
+        justify-content: flex-start;
+        position: relative;
+        padding: 2rem 1rem;
+      }
 
-.intro-btn {
-    background: #e50914;
-    color: #fff;
-    padding: 15px 25px;
-    border: none;
-    border-radius: 8px;
-    cursor: pointer;
-    font-size: clamp(16px, 4vw, 18px);
-    transition: transform .3s;
-}
+      /* 1) Image fixe en haut (celle qui va s'animer) */
+      .hero-image {
+        width: 100%;
+        max-width: 600px;
+        margin-bottom: 1rem;
+        z-index: 3;
+      }
+      .hero-image img {
+        width: 100%;
+        display: block;
+        border-radius: 12px;
+        box-shadow: 0 0 20px rgba(0, 0, 0, 0.5);
+        transition: transform 0.3s;
+      }
+      /* Animation étendue lors du clic sur le bouton */
+      @keyframes moveImage {
+        0% {
+          transform: translateY(0) scale(1) rotate(0deg);
+          opacity: 1;
+        }
+        20% {
+          transform: translateY(-20px) scale(1.05) rotate(3deg);
+        }
+        40% {
+          transform: translateY(-40px) scale(1.15) rotate(-3deg);
+        }
+        60% {
+          transform: translateY(-30px) scale(1.25) rotate(5deg);
+        }
+        80% {
+          transform: translateY(-10px) scale(1.1) rotate(0deg);
+        }
+        100% {
+          transform: translateY(0) scale(1) rotate(0deg);
+        }
+      }
+      .image-open {
+        animation: moveImage 2s ease-out forwards;
+      }
 
-.intro-btn:hover {
-    transform: scale(1.1);
-}
+      /* 2) Bloc de texte au centre */
+      .hero-content {
+        background: rgba(0, 0, 0, 0.4);
+        backdrop-filter: blur(10px);
+        padding: 1.5rem;
+        border-radius: 12px;
+        box-shadow: 0 0 20px rgba(229, 9, 20, 0.3);
+        text-align: center;
+        margin-bottom: 1.5rem;
+        max-width: 600px;
+        z-index: 3;
+      }
+      .hero-content h1 {
+        font-size: clamp(1.8rem, 5vw, 2.5rem);
+        margin-bottom: 0.5rem;
+      }
+      .hero-content p {
+        font-size: clamp(1rem, 2.5vw, 1.2rem);
+        margin-bottom: 1rem;
+      }
 
-@keyframes fadeIn {
-    0% { opacity: 0; }
-    100% { opacity: 1; }
-}
+      /* 3) Boutons en bas */
+      .hero-buttons {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 0.5rem;
+        justify-content: center;
+        margin-bottom: 2rem;
+        z-index: 3;
+      }
+      .hero-buttons .btn {
+        background: #e50914;
+        color: #fff;
+        padding: 0.8rem 1.2rem;
+        border: none;
+        border-radius: 5px;
+        cursor: pointer;
+        font-size: clamp(0.9rem, 2vw, 1rem);
+        transition: transform 0.3s, background 0.3s;
+      }
+      .hero-buttons .btn:hover {
+        background: #f40612;
+        transform: scale(1.1);
+      }
 
-@keyframes fadeOut {
-    0% { opacity: 1; }
-    100% { opacity: 0; }
-}
+      /******************************************************
+       *                MESSAGES SPÉCIAUX
+       ******************************************************/
+      .special-message {
+        display: none;
+        position: relative;
+        background: rgba(0, 0, 0, 0.7);
+        padding: 1rem;
+        border-radius: 12px;
+        box-shadow: 0 0 20px rgba(229, 9, 20, 0.8);
+        color: #fff;
+        max-width: 600px;
+        margin: 0 auto 1rem;
+        text-align: center;
+        font-size: 1rem;
+        z-index: 10;
+      }
 
-/* Header */
-.header {
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    padding: 10px 4%;
-    background: rgba(0, 0, 0, 0.7);
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    z-index: 100;
-    transition: background .3s;
-}
+      /******************************************************
+       *                 CONTENT ROWS
+       ******************************************************/
+      .content-row {
+        padding: 20px 4%;
+      }
+      .content-row h2 {
+        font-size: clamp(20px, 6vw, 24px);
+        margin-bottom: 15px;
+        text-align: center;
+      }
+      .row {
+        display: flex;
+        overflow-x: auto;
+        gap: 10px;
+        padding-bottom: 20px;
+        justify-content: center;
+      }
+      .row::-webkit-scrollbar {
+        display: none;
+      }
+      .card {
+        min-width: clamp(150px, 25vw, 200px);
+        height: clamp(200px, 40vw, 300px);
+        background: #333;
+        border-radius: 5px;
+        overflow: hidden;
+        position: relative;
+        transition: transform 0.3s;
+      }
+      .card:hover {
+        transform: scale(1.1);
+        z-index: 10;
+      }
+      .card img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+      }
 
-.header.scrolled {
-    background: #000;
-}
+      /******************************************************
+       *               FUNNY TEXT (Gâteaux)
+       ******************************************************/
+      .funny-text {
+        text-align: center;
+        font-size: clamp(14px, 4vw, 18px);
+        margin: 15px auto;
+        color: #e50914;
+        font-style: italic;
+        animation: bounce 1.5s infinite alternate;
+      }
+      @keyframes bounce {
+        from { transform: translateY(0); }
+        to { transform: translateY(-10px); }
+      }
+      .funny-choice {
+        text-align: center;
+        font-size: clamp(16px, 4vw, 19px);
+        color: #e50914;
+        margin-top: 20px;
+        font-weight: bold;
+        animation: funnyShake 2s infinite alternate;
+      }
+      @keyframes funnyShake {
+        0% { transform: rotate(-2deg); }
+        100% { transform: rotate(2deg); }
+      }
 
-.header img {
-    height: clamp(50px, 10vw, 75px);
-}
-
-.logo {
-    font-size: clamp(20px, 5vw, 32px);
-    color: #e50914;
-    font-weight: bold;
-    margin-right: 20px;
-    text-align: center;
-}
-
-.nav a {
-    color: #fff;
-    text-decoration: none;
-    margin: 0 10px;
-    font-size: clamp(14px, 3vw, 16px);
-}
-
-.nav a:hover {
-    color: #b3b3b3;
-}
-
-/* Hero Section */
-
-.hero {
-    height: 100vh;
-    width: 100%;
-    background: url('outlander_background.jpg') no-repeat center/cover;
-    position: relative;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    padding: 0 4%;
-    overflow: hidden;
-}
-
-.hero::after {
-    content: '';
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background: linear-gradient(to top, rgba(20, 20, 20, 0.8), rgba(20, 20, 20, 0.2));
-}
-
-.hero-content {
-    position: relative;
-    z-index: 2;
-    max-width: 90%;
-    text-align: center;
-    padding-bottom: 120px; /* Increased padding to make space for special-message */
-}
-
-
-.hero-content h1 {
-    font-size: clamp(32px, 8vw, 48px);
-    margin-bottom: 20px;
-    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.7);
-}
-
-.hero-content p {
-    font-size: clamp(14px, 4vw, 18px);
-    margin-bottom: 30px;
-    text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.7);
-}
-
-.buttons {
-    display: flex;
-    justify-content: center;
-    gap: 15px;
-    flex-wrap: wrap;
-}
-
-.btn {
-    background: #e50914;
-    color: #fff;
-    padding: 10px 20px;
-    border: none;
-    border-radius: 5px;
-    font-size: clamp(14px, 3vw, 16px);
-    cursor: pointer;
-    transition: transform 0.3s, background 0.3s;
-}
-
-.btn:hover {
-    background: #f40612;
-    transform: scale(1.1);
-}
-
-/* Time Portal */
-.time-portal {
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    width: clamp(200px, 50vw, 500px);
-    height: clamp(200px, 50vw, 500px);
-    border-radius: 50%;
-    background: radial-gradient(circle, rgba(0, 191, 255, 0.5), rgba(0, 0, 0, 0));
-    background-image: url('portail.JPG');
-    background-size: cover;
-    z-index: 0;
-    opacity: 0.6;
-    transition: width 1s, height 1s, opacity 1s;
-    animation: portal-glow 2s infinite alternate;
-}
-
-@keyframes portal-glow {
-    0% { box-shadow: 0 0 20px rgba(0, 191, 255, 0.8); }
-    100% { box-shadow: 0 0 50px rgba(0, 191, 255, 1); }
-}
-
-.portal-open {
-    width: clamp(300px, 80vw, 800px) !important;
-    height: clamp(300px, 80vw, 800px) !important;
-    opacity: 1 !important;
-    box-shadow: 0 0 150px rgba(0, 191, 255, 1), 0 0 80px rgba(255, 255, 255, 0.8);
-    animation: portal-open-anim 1.5s ease-out, portal-spin 3s infinite linear;
-}
-
-@keyframes portal-open-anim {
-    0% { width: clamp(200px, 50vw, 500px); height: clamp(200px, 50vw, 500px); opacity: 0.6; }
-    100% { width: clamp(300px, 80vw, 800px); height: clamp(300px, 80vw, 800px); opacity: 1; }
-}
-
-@keyframes portal-spin {
-    0% { transform: translate(-50%, -50%) rotate(0deg); }
-    100% { transform: translate(-50%, -50%) rotate(360deg); }
-}
-
-/* Special Message */
-.special-message {
-    position: absolute;
-    bottom: 20px;
-    left: 50%;
-    transform: translateX(-50%);
-    max-width: 90%;
-    width: clamp(300px, 80%, 550px);
-    text-align: center;
-    background: rgba(0, 0, 0, 0.7);
-    padding: 15px;
-    border-radius: 12px;
-    box-shadow: 0 0 20px rgba(229, 9, 20, 0.8);
-    color: #ffffff;
-    font-size: clamp(14px, 4vw, 17px);
-    z-index: 2;
-    display: none;
-    animation: fadeInUp 1s ease-in-out;
-}
-
-@keyframes fadeInUp {
-    0% { opacity: 0; transform: translate(-50%, 20px); }
-    100% { opacity: 1; transform: translate(-50%, 0); }
-}
-
-/* Content Rows */
-.content-row {
-    padding: 20px 4%;
-}
-
-.content-row h2 {
-    font-size: clamp(20px, 6vw, 24px);
-    margin-bottom: 15px;
-    text-align: center;
-}
-
-.row {
-    display: flex;
-    overflow-x: auto;
-    gap: 10px;
-    padding-bottom: 20px;
-    justify-content: center;
-}
-
-.row::-webkit-scrollbar {
-    display: none;
-}
-
-.card {
-    min-width: clamp(150px, 25vw, 200px);
-    height: clamp(200px, 40vw, 300px);
-    background: #333;
-    border-radius: 5px;
-    overflow: hidden;
-    position: relative;
-    transition: transform 0.3s;
-}
-
-.card:hover {
-    transform: scale(1.1);
-    z-index: 10;
-}
-
-.card img {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-}
-
-/* Funny Text */
-.funny-text {
-    text-align: center;
-    font-size: clamp(14px, 4vw, 18px);
-    margin: 15px auto;
-    color: #e50914;
-    font-style: italic;
-    animation: bounce 1.5s infinite alternate;
-}
-
-@keyframes bounce {
-    from { transform: translateY(0px); }
-    to { transform: translateY(-10px); }
-}
-
-.funny-choice {
-    text-align: center;
-    font-size: clamp(16px, 4vw, 19px);
-    color: #e50914;
-    margin-top: 20px;
-    font-weight: bold;
-    animation: funnyShake 2s infinite alternate;
-}
-
-@keyframes funnyShake {
-    0% { transform: rotate(-2deg); }
-    100% { transform: rotate(2deg); }
-}
-
-/* Media Queries */
-@media (max-width: 768px) {
-    .intro-screen h1 { font-size: clamp(20px, 6vw, 32px); }
-    .intro-btn { padding: 10px 20px; }
-    .header { flex-direction: column; padding: 10px; }
-    .header img { height: clamp(40px, 8vw, 60px); }
-    .logo { margin-right: 0; margin-bottom: 10px; }
-    .hero-content { padding-bottom: 100px; } /* Adjusted for tablet */
-    .hero-content h1 { font-size: clamp(24px, 6vw, 32px); }
-    .hero-content p { font-size: clamp(12px, 3vw, 14px); }
-    .buttons { flex-direction: column; gap: 10px; }
-    .btn { font-size: clamp(12px, 3vw, 14px); }
-    .time-portal { width: clamp(150px, 40vw, 300px); height: clamp(150px, 40vw, 300px); }
-    .portal-open { width: clamp(200px, 60vw, 500px) !important; height: clamp(200px, 60vw, 500px) !important; }
-    .card { min-width: clamp(120px, 20vw, 150px); height: clamp(160px, 30vw, 200px); }
-    .special-message { bottom: 10px; font-size: clamp(12px, 3vw, 14px); }
-}
-
-@media (max-width: 480px) {
-    .intro-screen h1 { font-size: clamp(18px, 5vw, 24px); }
-    .intro-btn { font-size: clamp(14px, 4vw, 16px); }
-    .hero-content { padding-bottom: 80px; } /* Adjusted for mobile */
-    .hero-content h1 { font-size: clamp(20px, 5vw, 28px); }
-    .hero-content p { font-size: clamp(10px, 3vw, 12px); }
-    .btn { padding: 8px 16px; font-size: clamp(10px, 2.5vw, 12px); }
-    .time-portal { width: clamp(100px, 30vw, 200px); height: clamp(100px, 30vw, 200px); }
-    .portal-open { width: clamp(150px, 50vw, 300px) !important; height: clamp(150px, 50vw, 300px) !important; }
-    .special-message { font-size: clamp(10px, 3vw, 12px); padding: 10px; bottom: 5px; }
-    .content-row h2 { font-size: clamp(16px, 5vw, 20px); }
-    .card { min-width: clamp(100px, 20vw, 120px); height: clamp(140px, 25vw, 160px); }
-}
+      /******************************************************
+       *                MEDIA QUERIES
+       ******************************************************/
+      @media (max-width: 768px) {
+        .header {
+          flex-direction: column;
+          padding: 10px;
+        }
+        .header img {
+          height: clamp(40px, 8vw, 60px);
+        }
+        .logo {
+          margin-right: 0;
+          margin-bottom: 10px;
+        }
+        .hero-content {
+          margin-bottom: 1rem;
+          padding: 1rem;
+        }
+        .hero-buttons {
+          margin-bottom: 1.5rem;
+        }
+        .special-message {
+          font-size: 0.9rem;
+        }
+      }
+      @media (max-width: 480px) {
+        .intro-screen h1 {
+          font-size: clamp(18px, 5vw, 24px);
+        }
+        .intro-btn {
+          font-size: clamp(14px, 4vw, 16px);
+        }
+        .hero-content {
+          padding: 0.8rem;
+        }
+        .hero-content h1 {
+          font-size: 1.5rem;
+        }
+        .hero-content p {
+          font-size: 0.95rem;
+        }
+        .hero-buttons .btn {
+          font-size: 0.9rem;
+        }
+        .special-message {
+          font-size: 0.85rem;
+        }
+      }
     </style>
-</head>
-<body>
-    <!-- Intro Screen -->
+  </head>
+  <body>
+    <!-- =======================================
+         Intro Screen
+    ======================================= -->
     <div class="intro-screen" id="intro">
-        <h1>✨ Es-tu prête à découvrir ta surprise, Amat ? ✨</h1>
-        <button class="intro-btn" onclick="enterSite()">Oui, je suis prête ! 🚀</button>
+      <h1>✨ Es-tu prête à découvrir ta surprise, Amat ? ✨</h1>
+      <button class="intro-btn" onclick="enterSite()">Oui, je suis prête ! 🚀</button>
     </div>
 
-    <!-- Main Content -->
+    <!-- =======================================
+         Header
+    ======================================= -->
     <header class="header">
-        <div class="logo">EVENEMENT DE L'ANNEE ! <br> Joyeux Anniversaire Amat !</div>
-        <img src="netflix_logo.png" alt="Netflix Logo">
+      <div class="logo">
+        EVENEMENT DE L'ANNEE ! <br />
+        Joyeux Anniversaire Amat !
+      </div>
+      <img src="netflix_logo.png" alt="Netflix Logo" />
     </header>
 
+    <!-- =======================================
+         Section Hero
+    ======================================= -->
     <section class="hero">
-        <div class="time-portal" id="portal"></div>
-        <div class="hero-content">
-            <h1>Outlander</h1>
-            <p>Amat, traverse le portail du temps vers l'Écosse de 1743 avec Claire et Jamie pour ton anniversaire !</p>
-            <div class="buttons">
-                <button class="btn" onclick="showMessage('msg1')">Message de Jamie</button>
-                <button class="btn" onclick="showMessage('msg2')">Message de Claire</button>
-                <button class="btn" onclick="showScottishWish()">Vœu Écossais</button>
-                <button class="btn" onclick="openTimePortal()">Ouvrir le Portail Temporel</button>
-            </div>
-            <p id="msg1" class="special-message">Joyeux anniversaire, Sassenach ! Que ton jour spécial soit aussi magique que les pierres de Craigh na Dun ! - Jamie</p>
-            <p id="msg2" class="special-message">Amat, que ton anniversaire soit rempli d'amour et d'aventures à travers le temps ! - Claire</p>
-            <p id="wish" class="special-message">Que les anciens esprits écossais te bénissent, Amat ! Que ton année soit aussi riche que les Highlands ! - Slàinte Mhath !</p>
-        </div>
+      <!-- 1) Image fixe en haut (qui va s'animer) -->
+      <div class="hero-image">
+        <img src="portail.JPG" alt="Portail Temporel" />
+      </div>
+
+      <!-- 2) Texte au centre -->
+      <div class="hero-content">
+        <h1>Outlander</h1>
+        <p>
+          Amat, traverse le portail du temps vers l'Écosse de 1743 avec Claire
+          et Jamie pour ton anniversaire !
+        </p>
+      </div>
+
+      <!-- 3) Boutons en bas -->
+      <div class="hero-buttons">
+        <button class="btn" onclick="showMessage('msg1')">Message de Jamie</button>
+        <button class="btn" onclick="showMessage('msg2')">Message de Claire</button>
+        <button class="btn" onclick="showScottishWish()">Vœu Écossais</button>
+        <button class="btn" onclick="openTimePortal()">Ouvrir le Portail Temporel</button>
+      </div>
+
+      <!-- 4) Messages spéciaux -->
+      <p id="msg1" class="special-message">
+        Joyeux anniversaire, Sassenach ! Que ton jour spécial soit aussi magique
+        que les pierres de Craigh na Dun ! - Jamie
+      </p>
+      <p id="msg2" class="special-message">
+        Amat, que ton anniversaire soit rempli d'amour et d'aventures à travers
+        le temps ! - Claire
+      </p>
+      <p id="wish" class="special-message">
+        Que les anciens esprits écossais te bénissent, Amat ! Que ton année soit
+        aussi riche que les Highlands ! - Slàinte Mhath !
+      </p>
     </section>
 
+    <!-- =======================================
+         Content Row: Outlander Dossiers
+    ======================================= -->
     <section class="content-row">
-        <h2>Les DOSSIERS d'Outlander pour Amat</h2>
-        <h2>Vraiment portrait craché de Sassenach !</h2>
-        <div class="row">
-            <div class="card"><img src="amat.JPG" alt="Saison 1"></div>
-            <div class="card"><img src="amat2.JPG" alt="Saison 2"></div>
-            <div class="card"><img src="amat3.JPG" alt="Saison 3"></div>
+      <h2>Les DOSSIERS d'Outlander pour Amat</h2>
+      <h2>Vraiment portrait craché de Sassenach !</h2>
+      <div class="row">
+        <div class="card">
+          <img src="amat.JPG" alt="Saison 1" />
         </div>
+        <div class="card">
+          <img src="amat2.JPG" alt="Saison 2" />
+        </div>
+        <div class="card">
+          <img src="amat3.JPG" alt="Saison 3" />
+        </div>
+      </div>
     </section>
 
+    <!-- =======================================
+         Content Row: Héros d'Anniversaire
+    ======================================= -->
     <section class="content-row">
-        <h2>Tes héros préférés fêtent ton anniversaire</h2>
-        <div class="row">
-            <div class="card"><img src="anniversaire.JPG" alt="Claire"></div>
-            <div class="card"><img src="anniversaire2.JPG" alt="Jamie"></div>
-            <div class="card"><img src="anniversaire3.JPG" alt="Black Jack"></div>
-            <div class="card"><img src="anniversaire4.JPG" alt="Geillis"></div>
+      <h2>Tes héros préférés fêtent ton anniversaire</h2>
+      <div class="row">
+        <div class="card">
+          <img src="anniversaire.JPG" alt="Claire" />
         </div>
+        <div class="card">
+          <img src="anniversaire2.JPG" alt="Jamie" />
+        </div>
+        <div class="card">
+          <img src="anniversaire3.JPG" alt="Black Jack" />
+        </div>
+        <div class="card">
+          <img src="anniversaire4.JPG" alt="Geillis" />
+        </div>
+      </div>
     </section>
 
+    <!-- =======================================
+         Content Row: Gâteau Spécial
+    ======================================= -->
     <section class="content-row">
-        <h2>Un gâteau spécial RAMAZAN et OUTLANDER</h2>
-        <br>
-        <h4 class="funny-text">« Attention Amat, ces gâteaux sont si bons qu'ils pourraient te faire voyager dans le temps... sans portail ! 😄 »</h4>
-        <br>
-        <div class="row">
-            <div class="card"><img src="gateau.JPG" alt="Gâteau spécial Ramadan"></div>
-            <div class="card"><img src="gateau2.JPG" alt="Gâteau spécial Outlander"></div>
+      <h2>Un gâteau spécial RAMAZAN et OUTLANDER</h2>
+      <br />
+      <h4 class="funny-text">
+        « Attention Amat, ces gâteaux sont si bons qu'ils pourraient te faire
+        voyager dans le temps... sans portail ! 😄 »
+      </h4>
+      <br />
+      <div class="row">
+        <div class="card">
+          <img src="gateau.JPG" alt="Gâteau spécial Ramadan" />
         </div>
-        <p class="funny-choice">« Alors Amat, plutôt Team Ramadan 🌙 ou Team Outlander 🏴 ? Choisis vite, avant qu'ils disparaissent dans un vortex ! 😜 »</p>
+        <div class="card">
+          <img src="gateau2.JPG" alt="Gâteau spécial Outlander" />
+        </div>
+      </div>
+      <p class="funny-choice">
+        « Alors Amat, plutôt Team Ramadan 🌙 ou Team Outlander 🏴 ? Choisis vite,
+        avant qu'ils disparaissent dans un vortex ! 😜 »
+      </p>
     </section>
 
+    <!-- =======================================
+         JavaScript
+    ======================================= -->
     <script>
-        function enterSite() {
-            const intro = document.getElementById('intro');
-            intro.style.animation = 'fadeOut 2s forwards';
-            setTimeout(() => {
-                intro.style.display = 'none';
-            }, 2000);
+      // Écran d'intro
+      function enterSite() {
+        const intro = document.getElementById("intro");
+        intro.style.animation = "fadeOut 2s forwards";
+        setTimeout(() => {
+          intro.style.display = "none";
+        }, 2000);
+      }
+      // Changement du header lors du scroll
+      window.addEventListener("scroll", () => {
+        const header = document.querySelector(".header");
+        if (window.scrollY > 50) {
+          header.classList.add("scrolled");
+        } else {
+          header.classList.remove("scrolled");
         }
-
-        window.addEventListener('scroll', () => {
-            const header = document.querySelector('.header');
-            if (window.scrollY > 50) {
-                header.classList.add('scrolled');
-            } else {
-                header.classList.remove('scrolled');
-            }
-        });
-
-        const cards = document.querySelectorAll('.card');
-        cards.forEach(card => {
-            card.addEventListener('mouseenter', () => {
-                card.style.transform = 'scale(1.1)';
-            });
-            card.addEventListener('mouseleave', () => {
-                card.style.transform = 'scale(1)';
-            });
-        });
-
-        function showMessage(messageId) {
-            const messages = document.querySelectorAll('.special-message');
-            messages.forEach(msg => msg.style.display = 'none');
-            const selectedMessage = document.getElementById(messageId);
-            selectedMessage.style.display = 'block';
-        }
-
-        function showScottishWish() {
-            const messages = document.querySelectorAll('.special-message');
-            messages.forEach(msg => msg.style.display = 'none');
-            const wish = document.getElementById('wish');
-            wish.style.display = 'block';
-        }
-
-        function openTimePortal() {
-            const portal = document.getElementById('portal');
-            portal.classList.add('portal-open');
-            setTimeout(() => {
-                portal.classList.remove('portal-open');
-            }, 3000);
-        }
-
-
-
-            window.onbeforeunload = function () {
-                window.scrollTo(0, 0);
-            };
-        
-            window.onload = function () {
-                window.scrollTo(0, 0);
-            };
-        
+      });
+      // Affichage des messages spéciaux
+      function showMessage(messageId) {
+        const messages = document.querySelectorAll(".special-message");
+        messages.forEach((msg) => (msg.style.display = "none"));
+        document.getElementById(messageId).style.display = "block";
+      }
+      function showScottishWish() {
+        const messages = document.querySelectorAll(".special-message");
+        messages.forEach((msg) => (msg.style.display = "none"));
+        document.getElementById("wish").style.display = "block";
+      }
+      // Animation étendue sur l'image du portail
+      function openTimePortal() {
+        const heroImg = document.querySelector(".hero-image img");
+        heroImg.classList.add("image-open");
+        // Retirer la classe après la durée de l'animation (2s)
+        setTimeout(() => {
+          heroImg.classList.remove("image-open");
+        }, 2000);
+      }
+      // Remettre le scroll en haut au rechargement
+      window.onbeforeunload = function () {
+        window.scrollTo(0, 0);
+      };
+      window.onload = function () {
+        window.scrollTo(0, 0);
+      };
     </script>
 
+    <!-- =======================================
+         Audio de fond
+    ======================================= -->
     <audio autoplay loop>
-        <source src="outlander_theme.mp3" type="audio/mpeg">
-        Votre navigateur ne supporte pas la lecture audio.
+      <source src="outlander_theme.mp3" type="audio/mpeg" />
+      Votre navigateur ne supporte pas la lecture audio.
     </audio>
-</body>
+  </body>
 </html>
