@@ -3,306 +3,505 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Outlander Anniversaire - Amat</title>
-    <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Roboto:wght@400;700&display=swap" rel="stylesheet">
+    <title>Netflix Outlander</title>
+    <link rel="icon" type="image/png" href="netflix_logo.png">
     <style>
+
+        @media (max-width: 768px) {
+            .hero-content h1 { font-size: 32px; }
+            .hero-content p { font-size: 14px; }
+            .buttons { flex-direction: column; gap: 10px; }
+            .portal-text-right { max-width: 200px; font-size: 13px; }
+            .amat-photo-container { width: 150px; height: 150px; }
+            .time-portal { width: 300px; height: 300px; }
+            .time-portal.portal-open { width: 500px; height: 500px; }
+        }
+
+
+        /* Intro Screen */
+        .intro-screen{position:fixed;top:0;left:0;width:100%;height:100vh;background:url('portail1.jpg')center/cover no-repeat;display:flex;flex-direction:column;justify-content:center;align-items:center;z-index:9999;text-align:center;animation:fadeIn 2s;}
+        .intro-screen h1{font-size:36px;margin-bottom:20px;text-shadow:2px 2px 5px #000;}
+        .intro-btn{background:#e50914;color:#fff;padding:15px 25px;border:none;border-radius:8px;cursor:pointer;font-size:18px;transition:transform .3s;}
+        .intro-btn:hover{transform:scale(1.1);}
+        @keyframes fadeIn{0%{opacity:0;}100%{opacity:1;}}
+        @keyframes fadeOut{0%{opacity:1;}100%{opacity:0;}}
+
+
         * {
             margin: 0;
             padding: 0;
             box-sizing: border-box;
+            font-family: Arial, sans-serif;
         }
 
         body {
-            font-family: 'Roboto', sans-serif;
-            background: url('outlander_background.jpg') no-repeat center center fixed;
-            background-size: cover;
+            background: #141414;
             color: #fff;
-            min-height: 100vh;
-            display: flex;
-            justify-content: center;
-            align-items: center;
             overflow-x: hidden;
         }
 
-        .overlay {
-            position: fixed;
-            inset: 0;
-            background: rgba(20, 20, 20, 0.8);
-            z-index: 1;
+        /* Header */
+        .header {position:fixed;top:0;left:0;width:100%;padding:10px 4%;background:rgba(0,0,0,0.7);display:flex;align-items:center;justify-content:space-between;z-index:100;transition:background .3s;}
+        .header img {height:75px;}
+
+        .header.scrolled {
+            background: #000;
         }
 
-        .loading-screen {
-            position: fixed;
-            inset: 0;
-            background: #141414;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            z-index: 1000;
-            animation: fadeOut 2s forwards 2s;
-        }
-
-        @keyframes fadeOut {
-            to { opacity: 0; visibility: hidden; }
-        }
-
-        .netflix-container {
-            position: relative;
-            z-index: 2;
-            max-width: 900px;
-            width: 90%;
-            margin: 20px;
-            padding: clamp(20px, 5vw, 40px);
-            background: rgba(20, 20, 20, 0.95);
-            border-radius: 4px;
-            text-align: center;
-            opacity: 0;
-            animation: fadeIn 1s forwards 2.5s;
-        }
-
-        @keyframes fadeIn {
-            from { opacity: 0; transform: translateY(20px); }
-            to { opacity: 1; transform: translateY(0); }
-        }
-
-        .netflix-logo {
-            font-family: 'Bebas Neue', sans-serif;
-            font-size: clamp(2em, 8vw, 3.5em);
+        .logo {
+            font-size: 32px;
             color: #e50914;
-            letter-spacing: 2px;
-            margin-bottom: 20px;
+            font-weight: bold;
+            margin-right: 40px;
         }
 
-        .outlander-title {
-            font-family: 'Bebas Neue', sans-serif;
-            font-size: clamp(1.8em, 6vw, 2.8em);
+        .nav a {
             color: #fff;
-            margin-bottom: 20px;
-            text-transform: uppercase;
-            letter-spacing: 1px;
+            text-decoration: none;
+            margin: 0 15px;
+            font-size: 16px;
         }
 
-        .button-container {
+        .nav a:hover {
+            color: #b3b3b3;
+        }
+
+        /* Hero Section */
+        .hero {
+            height: 100vh;
+            width: 100%;
+            background: url('outlander_background.jpg') no-repeat center;
+            background-size: cover;
+            position: relative;
             display: flex;
-            flex-wrap: wrap;
-            justify-content: center;
-            gap: 15px;
-            margin: 20px 0;
+            align-items: center;
+            padding: 0 4%;
+            overflow: hidden;
         }
 
-        .button {
+        .hero::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(to top, rgba(20, 20, 20, 0.8), rgba(20, 20, 20, 0.2));
+        }
+
+        .hero-content {
+            position: relative;
+            z-index: 1;
+            max-width: 600px;
+            text-align: center;
+        }
+
+        .hero-content h1 {
+            font-size: 48px;
+            margin-bottom: 20px;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.7);
+        }
+
+        .hero-content p {
+            font-size: 18px;
+            margin-bottom: 30px;
+            text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.7);
+        }
+
+        .buttons {
+            display: flex;
+            justify-content: center;
+            gap: 20px; /* Plus d'espace entre les boutons */
+            flex-wrap: wrap; /* Les boutons passent à la ligne si l'espace est réduit */
+        }
+
+        .btn {
             background: #e50914;
             color: #fff;
             padding: 12px 24px;
             border: none;
-            border-radius: 4px;
-            font-size: clamp(1em, 3vw, 1.2em);
+            border-radius: 5px;
+            font-size: 16px;
             cursor: pointer;
-            transition: all 0.3s ease;
-            font-family: 'Roboto', sans-serif;
-            min-width: 200px;
-            position: relative;
-            overflow: hidden;
+            transition: transform 0.3s, background 0.3s;
         }
 
-        .button:hover {
+        .btn:hover {
             background: #f40612;
-            transform: translateY(-2px);
-            box-shadow: 0 4px 12px rgba(229, 9, 20, 0.3);
+            transform: scale(1.1);
         }
 
-        .message {
-            font-size: clamp(1em, 4vw, 1.6em);
-            margin-top: 20px;
+        .portal-text-right {
+            position: absolute;
+            top: 50%;
+            right: 4%;
+            transform: translateY(-50%);
+            max-width: 280px;
+            text-align: center;
+            background: rgba(0, 0, 0, 0.6);
+            padding: 15px;
+            border-radius: 10px;
+            box-shadow: 0 0 20px rgba(0, 191, 255, 0.8);
+            color: #ffffff;
+            z-index: 2;
+            animation: fadeInRight 2s ease-in-out;
+        }
+        
+        .portal-text-right h2 {
+            font-size: 24px;
+            margin-bottom: 12px;
+            color: #00bfff;
+            font-weight: bold;
+        }
+        
+        .portal-text-right p {
+            font-size: 15px;
+            line-height: 1.4;
+        }
+        
+        @keyframes fadeInRight {
+            0% { opacity: 0; transform: translate(30px, -50%); }
+            100% { opacity: 1; transform: translate(0, -50%); }
+        }
+        
+        
+        
+
+        /* Photo d'Amat avec effet diaporama */
+        .amat-photo-container {
+            position: absolute;
+            top: 50%;
+            right: 5%;
+            transform: translateY(-50%);
+            width: 200px;
+            height: 200px;
+            overflow: hidden;
+            border: 5px solid #e50914;
+            border-radius: 10px;
+            box-shadow: 0 0 15px rgba(229, 9, 20, 0.8);
+            animation: portal-edge 3s infinite alternate;
+        }
+
+        .amat-photos {
+            width: 100%;
+            height: 100%;
+            position: relative;
+        }
+
+        .amat-photo {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            position: absolute;
+            top: 0;
+            left: 0;
             opacity: 0;
-            transition: opacity 0.5s ease;
-            color: #fff;
-            line-height: 1.5;
+            transition: opacity 1s ease-in-out;
         }
 
-        .message.active {
+        .amat-photo.active {
             opacity: 1;
         }
 
-        .timeline {
-            font-size: clamp(0.9em, 3vw, 1.2em);
-            color: #808080;
-            margin-bottom: 20px;
+        .amat-photo-container:hover .amat-photo {
+            transform: scale(1.1);
         }
 
-        .character-image {
-            max-width: 100%;
-            width: 300px;
-            height: auto;
-            margin: 20px auto;
-            border-radius: 4px;
-            opacity: 0;
-            animation: fadeInImage 1s forwards 3s;
+        @keyframes portal-edge {
+            0% { box-shadow: 0 0 15px rgba(229, 9, 20, 0.8); }
+            100% { box-shadow: 0 0 30px rgba(0, 191, 255, 0.8); }
         }
 
-        @keyframes fadeInImage {
-            to { opacity: 1; }
-        }
-
-        .portal {
-            position: fixed;
+        .time-portal {
+            position: absolute;
             top: 50%;
             left: 50%;
-            width: 0;
-            height: 0;
-            background: radial-gradient(circle, rgba(229, 9, 20, 0.8), transparent);
-            border-radius: 50%;
             transform: translate(-50%, -50%);
-            pointer-events: none;
-            z-index: 999;
+            width: 500px; 
+            height: 500px; 
+            border-radius: 50%;
+            background: radial-gradient(circle, rgba(0, 191, 255, 0.5), rgba(0, 0, 0, 0));
+            z-index: 0;
+            opacity: 0.6;
+            transition: width 1s, height 1s, opacity 1s;
+            animation: portal-glow 2s infinite alternate;
+            background-image: url('portail.jpg'); 
+            background-size: cover;
+        }
+        
+
+        @keyframes portal-glow {
+            0% { box-shadow: 0 0 20px rgba(0, 191, 255, 0.8); }
+            100% { box-shadow: 0 0 50px rgba(0, 191, 255, 1); }
         }
 
-        .portal.active {
-            animation: portalOpen 1.5s forwards;
+        .portal-open {
+            width: 800px !important; /* taille finale augmentée */
+            height: 800px !important; /* taille finale augmentée */
+            opacity: 1 !important;
+            box-shadow: 0 0 150px rgba(0, 191, 255, 1), 0 0 80px rgba(255, 255, 255, 0.8);
+            animation: portal-open-anim 1.5s ease-out, portal-spin 3s infinite linear;
+        }
+        
+        @keyframes portal-open-anim {
+            0% { width: 500px; height: 500px; opacity: 0.6; }
+            100% { width: 800px; height: 800px; opacity: 1; }
+        }
+        
+
+        @keyframes portal-spin {
+            0% { transform: translate(-50%, -50%) rotate(0deg); }
+            100% { transform: translate(-50%, -50%) rotate(360deg); }
+        }
+        .special-message {
+            position: absolute;
+            bottom:100; /* placé tout en bas de la section */
+            left: 50%;
+            transform: translateX(-50%);
+            max-width: 550px;
+            width: 90%;
+            text-align: center;
+            background: rgba(0, 0, 0, 0.7);
+            padding: 15px;
+            border-radius: 12px;
+            box-shadow: 0 0 20px rgba(229, 9, 20, 0.8);
+            color: #ffffff;
+            font-size: 17px;
+            z-index: 2;
+            display: none;
+            animation: fadeInUp 1s ease-in-out;
+        }
+        
+        
+        @keyframes fadeInUp {
+            0% { opacity: 0; transform: translate(-50%, 20px); }
+            100% { opacity: 1; transform: translate(-50%, 0); }
+        }
+        
+
+
+        /* Content Rows */
+        .content-row {
+            padding: 20px 4%;
         }
 
-        @keyframes portalOpen {
-            0% { width: 0; height: 0; opacity: 1; }
-            100% { width: clamp(300px, 80vw, 800px); height: clamp(300px, 80vw, 800px); opacity: 0; }
+        .content-row h2 {
+            font-size: 24px;
+            margin-bottom: 15px;
+            text-align: center;
         }
 
-        #youtube-player {
-            display: none; /* Caché car on veut juste le son */
+        .row {
+            display: flex;
+            overflow-x: auto;
+            gap: 10px;
+            padding-bottom: 20px;
         }
 
-        @media (max-width: 768px) {
-            .button-container {
-                flex-direction: column;
-                align-items: center;
-            }
-
-            .button {
-                width: 100%;
-                max-width: 300px;
-            }
-
-            .netflix-container {
-                margin: 10px;
-                padding: 20px;
-            }
+        .row::-webkit-scrollbar {
+            display: none;
         }
 
-        @media (max-width: 480px) {
-            .character-image {
-                width: 100%;
-                max-width: 200px;
-            }
+        .card {
+            min-width: 200px;
+            height: 300px;
+            background: #333;
+            border-radius: 5px;
+            overflow: hidden;
+            position: relative;
+            transition: transform 0.3s;
         }
+
+        .card:hover {
+            transform: scale(1.1);
+            z-index: 10;
+        }
+
+        .card img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+
+        .funny-text {
+            text-align: center; /* Ceci centre ton texte horizontalement */
+            font-size: 18px;
+            margin: 15px auto; /* Marge automatique pour centrer horizontalement avec un peu d'espace */
+            color: #e50914;
+            font-style: italic;
+            animation: bounce 1.5s infinite alternate;
+        }
+        
+        @keyframes bounce {
+            from { transform: translateY(0px); }
+            to { transform: translateY(-10px); }
+        }
+        .row {
+            justify-content: center; /* Centre les gâteaux horizontalement */
+            gap: 20px; /* Espacement agréable entre les cartes */
+        }
+
+        .funny-choice {
+            text-align: center;
+            font-size: 19px;
+            color: #e50914;
+            margin-top: 20px;
+            font-weight: bold;
+            animation: funnyShake 2s infinite alternate;
+        }
+        
+        @keyframes funnyShake {
+            0% { transform: rotate(-2deg); }
+            100% { transform: rotate(2deg); }
+        }
+        
+        
+        
     </style>
 </head>
 <body>
-    <div class="overlay"></div>
-    <div class="loading-screen">
-        <h1 style="font-family: 'Bebas Neue', sans-serif; font-size: clamp(1.5em, 5vw, 2em); color: #e50914;">Préparation du voyage dans le temps...</h1>
+    <!-- Ecran d'accueil -->
+    <div class="intro-screen" id="intro">
+        <h1>✨ Es-tu prête à découvrir ta surprise, Amat ? ✨</h1>
+        <button class="intro-btn" onclick="enterSite()">Oui, je suis prête ! 🚀</button>
     </div>
 
-    <div class="netflix-container">
-        <div class="netflix-logo">Outlander Anniversaire</div>
-        <h1 class="outlander-title">Joyeux 41e Anniversaire, Amat !</h1>
-        <p class="timeline">18e siècle, Écosse : Un voyage spécial pour célébrer tes 41 ans</p>
-        <img src="outlander_background2.jpg" alt="Amat en Outlander" class="character-image">
-        <div class="button-container">
-            <button class="button" onclick="showMessage('message1'); openPortal(); playSound('portal_sound.mp3')">Ouvrir le portail temporel</button>
-            <button class="button" onclick="showMessage('message2'); playSound('scottish_wish.mp3')">Vœu écossais</button>
-            <button class="button" onclick="showConfetti(); playSound('fire_sound.mp3')">Feux celtiques</button>
-            <button class="button" onclick="playYouTubeVideo()">Jouer la musique Outlander</button>
+    <header class="header">
+        <div class="logo">EVENEMENT DE L'ANNEE ! <br> Joyeux Anniversaire Amat !</div>
+        <img src="netflix_logo.png" alt="Netflix Logo">
+    </header>
+
+    <section class="hero">
+        <div class="time-portal" id="portal"></div>
+        <div class="portal-text-right">
+            <h2>Traverse le Portail Temporel</h2>
+            <p>Prépare-toi à découvrir les mystères et aventures des Highlands en compagnie de Claire et Jamie !</p>
         </div>
-        <div id="message1" class="message">Amat, que ce voyage dans le temps t’apporte joie, courage et amour, comme Claire et Jamie ! Que ton 41e anniversaire soit légendaire !</div>
-        <div id="message2" class="message">Sur les terres d’Écosse, nous te souhaitons un joyeux 41e anniversaire ! Slàinte Mhath !</div>
-    </div>
+        
+        
+        <div class="hero-content">
+            <h1>Outlander</h1>
+            <p>Amat, traverse le portail du temps vers l'Écosse de 1743 avec Claire et Jamie pour ton anniversaire !</p>
+            <div class="buttons">
+                <button class="btn" onclick="showMessage('msg1')">Message de Jamie</button>
+                <button class="btn" onclick="showMessage('msg2')">Message de Claire</button>
+                <button class="btn" onclick="showScottishWish()">Vœu Écossais</button>
+                <button class="btn" onclick="openTimePortal()">Ouvrir le Portail Temporel</button>
+            </div>
+            <p id="msg1" class="special-message">Joyeux anniversaire, Sassenach ! Que ton jour spécial soit aussi magique que les pierres de Craigh na Dun ! - Jamie</p>
+            <p id="msg2" class="special-message">Amat, que ton anniversaire soit rempli d'amour et d'aventures à travers le temps ! - Claire</p>
+            <p id="wish" class="special-message">Que les anciens esprits écossais te bénissent, Amat ! Que ton année soit aussi riche que les Highlands ! - Slàinte Mhath !</p>
+        </div>
+    </section>
 
-    <!-- Conteneur pour le lecteur YouTube -->
-    <div id="youtube-player"></div>
+    <section class="content-row">
+        <h2>Les DOSSIERS d'Outlander pour Amat</h2> <br>
+        <h2>Vraiment portrait craché de Sassenach !</h2>
+        <div class="row">
+            <div class="card"><img src="amat.jpg" alt="Saison 1"></div>
+            <div class="card"><img src="amat2.jpg" alt="Saison 2"></div>
+            <div class="card"><img src="amat3.jpg" alt="Saison 3"></div>
+        </div>
+    </section>
 
-    <script src="https://www.youtube.com/iframe_api"></script>
+    <section class="content-row">
+        <h2>Tes héros préférés fêtent ton anniversaire</h2>
+        <div class="row">
+            <div class="card"><img src="anniversaire.JPG" alt="Claire"></div>
+            <div class="card"><img src="anniversaire2.JPG" alt="Jamie"></div>
+            <div class="card"><img src="anniversaire3.JPG" alt="Black Jack"></div>
+            <div class="card"><img src="anniversaire4.JPG" alt="Geillis"></div>
+        </div>
+    </section>
+
+    <section class="content-row">
+        <h2>Un gâteau spécial RAMAZAN et OUTLANDER</h2>
+        <br>
+        <h4 class="funny-text">« Attention Amat, ces gâteaux sont si bons qu'ils pourraient te faire voyager dans le temps... sans portail ! 😄 »</h4>
+        <br>
+        <div class="row">
+            <div class="card">
+                <img src="gateau.jpg" alt="Gâteau spécial Ramadan">
+            </div>
+            <div class="card">
+                <img src="gateau2.jpg" alt="Gâteau spécial Outlander">
+            </div>
+        </div>
+        <p class="funny-choice">« Alors Amat, plutôt Team Ramadan 🌙 ou Team Outlander 🏴 ? Choisis vite, avant qu'ils disparaissent dans un vortex ! 😜 »</p>
+
+    </section>
+    
+
+
+
+    
+    
+
     <script>
-        let player;
-
-        // Initialisation de l'API YouTube
-        function onYouTubeIframeAPIReady() {
-            player = new YT.Player('youtube-player', {
-                height: '0', // Hauteur 0 car on veut juste le son
-                width: '0',  // Largeur 0 car on veut juste le son
-                videoId: 'YQ3uNTd4KtI', // ID de la vidéo YouTube
-                playerVars: {
-                    'autoplay': 0, // Ne joue pas automatiquement
-                    'controls': 0, // Pas de contrôles visibles
-                    'loop': 1,     // Boucle
-                    'playlist': 'YQ3uNTd4KtI' // Nécessaire pour la boucle
-                },
-                events: {
-                    'onReady': onPlayerReady
-                }
-            });
+        function enterSite(){
+            const intro=document.getElementById('intro');
+            intro.style.animation="fadeOut 2s forwards";
+            setTimeout(()=>{
+                intro.style.display="none";
+            },2000);
         }
-
-        function onPlayerReady(event) {
-            // Le lecteur est prêt, mais on ne fait rien tant que le bouton n'est pas cliqué
-            player.setVolume(30); // Volume à 30%
-        }
-
-        function playYouTubeVideo() {
-            if (player && player.playVideo) {
-                player.playVideo();
+    
+        window.addEventListener('scroll', ()=>{
+            const header = document.querySelector('.header');
+            if(window.scrollY > 50){
+                header.classList.add('scrolled');
+            }else{
+                header.classList.remove('scrolled');
             }
-        }
-
-        window.addEventListener('load', () => {
-            setTimeout(showConfetti, 3000);
         });
-
-        function playSound(soundFile) {
-            const audio = new Audio(soundFile);
-            audio.play().catch(error => console.log("Erreur audio:", error));
-        }
-
-        function showMessage(messageId) {
-            document.querySelectorAll('.message').forEach(msg => {
-                msg.classList.remove('active');
+    
+        const cards = document.querySelectorAll('.card');
+        cards.forEach(card =>{
+            card.addEventListener('mouseenter', ()=>{
+                card.style.transform = 'scale(1.1)';
             });
-            document.getElementById(messageId).classList.add('active');
+            card.addEventListener('mouseleave', ()=>{
+                card.style.transform = 'scale(1)';
+            });
+        });
+    
+        function showMessage(messageId){
+            const messages = document.querySelectorAll('.special-message');
+            messages.forEach(msg => msg.style.display = 'none');
+            const selectedMessage = document.getElementById(messageId);
+            selectedMessage.style.display = 'block';
         }
-
-        function showConfetti() {
-            for (let i = 0; i < 50; i++) {
-                const confetti = document.createElement('div');
-                confetti.className = 'confetti';
-                confetti.style.cssText = `
-                    position: absolute;
-                    width: 8px;
-                    height: 8px;
-                    background: #e50914;
-                    border-radius: 50%;
-                    left: ${Math.random() * 100}vw;
-                    animation: fall 2s linear ${Math.random()}s forwards;
-                `;
-                document.body.appendChild(confetti);
-                setTimeout(() => confetti.remove(), 2000);
-            }
+    
+        function showScottishWish(){
+            const messages = document.querySelectorAll('.special-message');
+            messages.forEach(msg => msg.style.display = 'none');
+            const wish = document.getElementById('wish');
+            wish.style.display = 'block';
         }
-
-        function openPortal() {
-            const portal = document.createElement('div');
-            portal.className = 'portal';
-            document.body.appendChild(portal);
-            setTimeout(() => portal.classList.add('active'), 10);
-            setTimeout(() => portal.remove(), 1500);
+    
+        function openTimePortal(){
+            const portal = document.getElementById('portal');
+            portal.classList.add('portal-open');
+            setTimeout(()=>{
+                portal.classList.remove('portal-open');
+            },3000);
         }
-
-        // Définition de l'animation confetti
-        const style = document.createElement('style');
-        style.textContent = `
-            @keyframes fall {
-                0% { top: -10vh; opacity: 1; }
-                100% { top: 100vh; opacity: 0; }
-            }
-        `;
-        document.head.appendChild(style);
+    
+        let currentPhoto = 0;
+        const photos = document.querySelectorAll('.amat-photo');
+        function showNextPhoto(){
+            photos[currentPhoto].classList.remove('active');
+            currentPhoto = (currentPhoto + 1) % photos.length;
+            photos[currentPhoto].classList.add('active');
+        }
+        setInterval(showNextPhoto, 3000);
+        photos[currentPhoto].classList.add('active');
     </script>
+    <audio autoplay loop>
+        <source src="outlander_theme.mp3" type="audio/mpeg">
+        Votre navigateur ne supporte pas la lecture audio.
+    </audio>
+    
 </body>
 </html>
