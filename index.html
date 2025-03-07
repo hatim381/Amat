@@ -5,7 +5,6 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Netflix Outlander</title>
     <link rel="icon" type="image/png" href="netflix_logo.png" />
-    <!-- Ajout de la police Poppins via Google Fonts -->
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
     <style>
       /******************************************************
@@ -23,7 +22,7 @@
         overflow-x: hidden;
         position: relative;
       }
-    
+
       /******************************************************
        *                  INTRO SCREEN
        ******************************************************/
@@ -68,7 +67,7 @@
         0% { opacity: 1; }
         100% { opacity: 0; }
       }
-    
+
       /******************************************************
        *                     HEADER
        ******************************************************/
@@ -106,7 +105,7 @@
         75% { transform: rotate(3deg); }
         100% { transform: rotate(0deg); }
       }
-    
+
       /******************************************************
        *               NOUVELLE HERO SECTION
        ******************************************************/
@@ -121,7 +120,7 @@
         position: relative;
         padding: 2rem 1rem;
       }
-    
+
       .hero-image {
         width: 100%;
         max-width: 600px;
@@ -160,7 +159,7 @@
       .image-open {
         animation: moveImage 2s ease-out forwards;
       }
-    
+
       .hero-content {
         background: rgba(255, 255, 255, 0.1);
         backdrop-filter: blur(15px);
@@ -182,7 +181,7 @@
         font-size: clamp(1rem, 2.5vw, 1.2rem);
         margin-bottom: 1rem;
       }
-    
+
       .hero-buttons {
         display: flex;
         flex-wrap: wrap;
@@ -207,7 +206,7 @@
         transform: scale(1.1) rotate(-2deg);
         box-shadow: 0px 0px 20px rgba(229, 9, 20, 0.8);
       }
-    
+
       /******************************************************
        *                MESSAGES SPÉCIAUX
        ******************************************************/
@@ -225,7 +224,7 @@
         font-size: 1rem;
         z-index: 10;
       }
-    
+
       /******************************************************
        *                 CONTENT ROWS
        ******************************************************/
@@ -277,7 +276,7 @@
         0% { opacity: 0; transform: translateY(20px); }
         100% { opacity: 1; transform: translateY(0); }
       }
-    
+
       /******************************************************
        *               FUNNY TEXT (Gâteaux)
        ******************************************************/
@@ -305,7 +304,7 @@
         0% { transform: rotate(-2deg); }
         100% { transform: rotate(2deg); }
       }
-    
+
       /******************************************************
        *                MEDIA QUERIES
        ******************************************************/
@@ -355,7 +354,7 @@
           font-size: 0.85rem;
         }
       }
-    
+
       /******************************************************
        *                STARS CANVAS
        ******************************************************/
@@ -480,16 +479,33 @@
     <!-- Stars Canvas -->
     <canvas id="starsCanvas"></canvas>
 
+    <!-- Audio de fond -->
+    <audio id="background-audio" loop>
+      <source src="outlander_theme.mp3" type="audio/mpeg" />
+      Votre navigateur ne supporte pas la lecture audio.
+    </audio>
+
     <!-- JavaScript -->
     <script>
-      // Écran d'intro
+      // Gestion de l'audio
+      const audio = document.getElementById("background-audio");
+
+      function playAudio() {
+        audio.play().catch((error) => {
+          console.log("Erreur de lecture audio : ", error);
+        });
+      }
+
+      // Écran d'intro avec démarrage de l'audio
       function enterSite() {
         const intro = document.getElementById("intro");
         intro.style.animation = "fadeOut 2s forwards";
         setTimeout(() => {
           intro.style.display = "none";
+          playAudio(); // Démarre l'audio après l'interaction
         }, 2000);
       }
+
       // Changement du header lors du scroll
       window.addEventListener("scroll", () => {
         const header = document.querySelector(".header");
@@ -499,18 +515,21 @@
           header.classList.remove("scrolled");
         }
       });
+
       // Affichage des messages spéciaux
       function showMessage(messageId) {
         const messages = document.querySelectorAll(".special-message");
         messages.forEach((msg) => (msg.style.display = "none"));
         document.getElementById(messageId).style.display = "block";
       }
+
       function showScottishWish() {
         const messages = document.querySelectorAll(".special-message");
         messages.forEach((msg) => (msg.style.display = "none"));
         document.getElementById("wish").style.display = "block";
       }
-      // Animation étendue sur l'image du portail
+
+      // Animation du portail
       function openTimePortal() {
         const heroImg = document.querySelector(".hero-image img");
         heroImg.classList.add("image-open");
@@ -518,6 +537,7 @@
           heroImg.classList.remove("image-open");
         }, 2000);
       }
+
       // Remettre le scroll en haut au rechargement
       window.onbeforeunload = function () {
         window.scrollTo(0, 0);
@@ -559,11 +579,5 @@
       }
       animateStars();
     </script>
-
-    <!-- Audio de fond -->
-    <audio autoplay loop>
-      <source src="outlander_theme.mp3" type="audio/mpeg" />
-      Votre navigateur ne supporte pas la lecture audio.
-    </audio>
   </body>
 </html>
