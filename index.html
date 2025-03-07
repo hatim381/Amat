@@ -177,8 +177,9 @@
       #surprise-character {
         display: none;
         position: absolute;
-        z-index: 10; /* Plus haut que .hero-content */
+        z-index: 10;
         max-width: 200px;
+        width: 30vw;
         left: 50%;
         top: 50%;
         transform: translate(-50%, -50%);
@@ -190,6 +191,19 @@
       }
       .character-appear {
         animation: characterPop 1s forwards;
+      }
+
+      @media (max-width: 768px) {
+        #surprise-character {
+          width: 40vw;
+          top: 40%;
+        }
+      }
+      @media (max-width: 480px) {
+        #surprise-character {
+          width: 50vw;
+          top: 30%;
+        }
       }
 
       .hero-content {
@@ -464,7 +478,7 @@
     </section>
 
     <!-- Content Row: Héros d'Anniversaire -->
-    <section class="content-row">
+    <section class="content했던-row">
       <h2>Tes héros préférés fêtent ton anniversaire</h2>
       <div class="row">
         <div class="card">
