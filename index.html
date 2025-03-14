@@ -151,13 +151,13 @@
         background: #000;
       }
       .header img {
-        height: clamp(50px, 10vw, 75px);
+        height: clamp(40px, 8vw, 60px);
       }
       .logo {
-        font-size: clamp(20px, 5vw, 32px);
+        font-size: clamp(16px, 4vw, 24px);
         color: #e50914;
         font-weight: bold;
-        margin-right: 20px;
+        margin-right: 10px;
         text-align: center;
       }
       .logo:hover {
@@ -183,7 +183,7 @@
         align-items: center;
         justify-content: flex-start;
         position: relative;
-        padding: 2rem 1rem;
+        padding: 1rem;
       }
       .hero::after {
         content: "";
@@ -191,13 +191,13 @@
         bottom: 0;
         left: 0;
         width: 100%;
-        height: 200px;
+        height: 100px;
         background: linear-gradient(to top, rgba(20, 20, 20, 0.8), transparent);
         pointer-events: none;
       }
       .hero-image {
         width: 100%;
-        max-width: 600px;
+        max-width: 400px;
         margin-bottom: 1rem;
         z-index: 3;
         position: relative;
@@ -213,24 +213,24 @@
         background: rgba(255, 255, 255, 0.1);
         backdrop-filter: blur(15px);
         border: 1px solid rgba(255, 255, 255, 0.2);
-        padding: 1.5rem;
+        padding: 1rem;
         border-radius: 12px;
         box-shadow: 0 0 20px rgba(229, 9, 20, 0.3);
         text-align: center;
-        margin-bottom: 1.5rem;
-        max-width: 600px;
+        margin-bottom: 1rem;
+        max-width: 90%;
         z-index: 3;
         opacity: 0;
         animation: revealTitle 1s forwards 1s;
       }
       .hero-content h1 {
-        font-size: clamp(1.8rem, 5vw, 2.5rem);
+        font-size: clamp(1.5rem, 5vw, 2rem);
         margin-bottom: 0.5rem;
         text-shadow: 0px 0px 10px rgba(229, 9, 20, 0.8);
         font-family: 'Cinzel', serif;
       }
       .hero-content p {
-        font-size: clamp(1rem, 2.5vw, 1.2rem);
+        font-size: clamp(0.9rem, 2.5vw, 1rem);
         margin-bottom: 1rem;
       }
       @keyframes revealTitle {
@@ -242,7 +242,7 @@
         flex-wrap: wrap;
         gap: 0.5rem;
         justify-content: center;
-        margin-bottom: 2rem;
+        margin-bottom: 1rem;
         z-index: 3;
       }
       .hero-buttons .btn {
@@ -273,10 +273,10 @@
         border-radius: 12px;
         box-shadow: 0 0 20px rgba(229, 9, 20, 0.8);
         color: #fff;
-        max-width: 600px;
+        max-width: 90%;
         margin: 0 auto 1rem;
         text-align: center;
-        font-size: 1rem;
+        font-size: 0.9rem;
         z-index: 10;
       }
 
@@ -287,7 +287,7 @@
         padding: 20px 4%;
       }
       .content-row h2 {
-        font-size: clamp(20px, 6vw, 24px);
+        font-size: clamp(18px, 5vw, 22px);
         margin-bottom: 15px;
         text-align: center;
         opacity: 0;
@@ -299,14 +299,14 @@
         overflow-x: auto;
         gap: 10px;
         padding-bottom: 20px;
-        justify-content: center;
+        justify-content: flex-start;
       }
       .row::-webkit-scrollbar {
         display: none;
       }
       .card {
-        min-width: clamp(150px, 25vw, 200px);
-        height: clamp(200px, 40vw, 300px);
+        min-width: clamp(120px, 30vw, 150px);
+        height: clamp(150px, 40vw, 200px);
         background: #333;
         border-radius: 5px;
         overflow: hidden;
@@ -317,7 +317,7 @@
         animation: fadeInUp 1s forwards;
       }
       .card:hover {
-        transform: scale(1.15);
+        transform: scale(1.1);
         z-index: 10;
         filter: brightness(1.2);
       }
@@ -346,7 +346,7 @@
         transform: translateY(0);
       }
       .card-info p {
-        font-size: 0.9rem;
+        font-size: 0.8rem;
         color: #fff;
       }
       @keyframes fadeInUp {
@@ -359,93 +359,27 @@
        ******************************************************/
       .funny-text {
         text-align: center;
-        font-size: clamp(14px, 4vw, 18px);
-        margin: 15px auto;
+        font-size: clamp(12px, 4vw, 16px);
+        margin: 10px auto;
         color: #e50914;
         font-style: italic;
         animation: bounce 1.5s infinite alternate;
       }
       @keyframes bounce {
         from { transform: translateY(0); }
-        to { transform: translateY(-10px); }
+        to { transform: translateY(-5px); }
       }
       .funny-choice {
         text-align: center;
-        font-size: clamp(16px, 4vw, 19px);
+        font-size: clamp(14px, 4vw, 16px);
         color: #e50914;
-        margin-top: 20px;
+        margin-top: 10px;
         font-weight: bold;
         animation: funnyShake 2s infinite alternate;
       }
       @keyframes funnyShake {
         0% { transform: rotate(-2deg); }
         100% { transform: rotate(2deg); }
-      }
-
-      /******************************************************
-       *                MEDIA QUERIES
-       ******************************************************/
-      @media (max-width: 768px) {
-        .header {
-          flex-direction: column;
-          padding: 10px;
-        }
-        .header img {
-          height: clamp(40px, 8vw, 60px);
-        }
-        .logo {
-          margin-right: 0;
-          margin-bottom: 10px;
-        }
-        .hero-content {
-          margin-bottom: 1rem;
-          padding: 1rem;
-        }
-        .hero-buttons {
-          margin-bottom: 1.5rem;
-        }
-        .special-message {
-          font-size: 0.9rem;
-        }
-      }
-      @media (max-width: 480px) {
-        .intro-screen h1 {
-          font-size: clamp(18px, 5vw, 24px);
-        }
-        .intro-btn {
-          font-size: clamp(14px, 4vw, 16px);
-        }
-        .hero-content {
-          padding: 0.8rem;
-        }
-        .hero-content h1 {
-          font-size: 1.5rem;
-        }
-        .hero-content p {
-          font-size: 0.95rem;
-        }
-        .hero-buttons .btn {
-          font-size: 0.9rem;
-        }
-        .special-message {
-          font-size: 0.85rem;
-        }
-        .card .card-info p {
-          font-size: 0.8rem;
-        }
-      }
-
-      /******************************************************
-       *                STARS CANVAS
-       ******************************************************/
-      #starsCanvas {
-        position: fixed;
-        top: 0;
-        left: 0;
-        width: 100%;
-        height: 100%;
-        z-index: 1;
-        pointer-events: none;
       }
 
       /******************************************************
