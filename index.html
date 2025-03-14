@@ -5,11 +5,14 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Netflix Outlander</title>
     <link rel="icon" type="image/png" href="netflix_logo.png" />
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
+    <link rel="preload" href="netflix_logo.png" as="image" />
+    <link rel="preload" href="outlander_theme.mp3" as="audio" />
+    <link rel="preload" href="netflix_intro.mp4" as="video" />
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&family=Cinzel&display=swap" rel="stylesheet">
     <style>
       /******************************************************
        *                    RESET + BASE
-       *****************************************************https://youtu.be/h7CVc7QOWrY?si=UNCpeTMzuKk_x2BE*/
+       ******************************************************/
       * {
         margin: 0;
         padding: 0;
@@ -22,6 +25,33 @@
         overflow-x: hidden;
         position: relative;
         transition: background 0.5s ease;
+      }
+
+      /******************************************************
+       *                NETFLIX LOADING ANIMATION
+       ******************************************************/
+      .loading-screen {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100vh;
+        background: #141414;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        z-index: 10000;
+        animation: fadeOutLoading 4s forwards;
+      }
+      .loading-video {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+      }
+      @keyframes fadeOutLoading {
+        0% { opacity: 1; }
+        75% { opacity: 1; }
+        100% { opacity: 0; display: none; }
       }
 
       /******************************************************
@@ -46,6 +76,7 @@
         font-size: clamp(24px, 5vw, 36px);
         margin-bottom: 20px;
         text-shadow: 2px 2px 5px #000;
+        font-family: 'Cinzel', serif;
       }
       .intro-btn {
         background: #e50914;
@@ -55,18 +86,49 @@
         border-radius: 8px;
         cursor: pointer;
         font-size: clamp(16px, 4vw, 18px);
-        transition: transform 0.3s;
+        transition: transform 0.3s, box-shadow 0.3s;
       }
       .intro-btn:hover {
         transform: scale(1.1);
+        box-shadow: 0 0 15px rgba(229, 9, 20, 0.7);
       }
-      @keyframes fadeIn {
-        0% { opacity: 0; }
-        100% { opacity: 1; }
+
+      /******************************************************
+       *                VIDEO INTERMEDIAIRE
+       ******************************************************/
+      .video-screen {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100vh;
+        background: #141414;
+        display: none;
+        justify-content: center;
+        align-items: center;
+        z-index: 9998;
+        flex-direction: column;
       }
-      @keyframes fadeOut {
-        0% { opacity: 1; }
-        100% { opacity: 0; }
+      .video-screen iframe {
+        width: 100%;
+        height: 100%;
+        border: none;
+      }
+      .continue-btn {
+        display: none;
+        background: #e50914;
+        color: #fff;
+        padding: 15px 25px;
+        border: none;
+        border-radius: 8px;
+        cursor: pointer;
+        font-size: clamp(16px, 4vw, 18px);
+        margin-top: 20px;
+        transition: transform 0.3s, box-shadow 0.3s;
+      }
+      .continue-btn:hover {
+        transform: scale(1.1);
+        box-shadow: 0 0 15px rgba(229, 9, 20, 0.7);
       }
 
       /******************************************************
@@ -97,7 +159,9 @@
         font-weight: bold;
         margin-right: 20px;
         text-align: center;
-        animation: shake 1s infinite alternate ease-in-out;
+      }
+      .logo:hover {
+        animation: shake 0.5s ease-in-out;
       }
       @keyframes shake {
         0% { transform: rotate(0deg); }
@@ -114,98 +178,37 @@
         width: 100%;
         min-height: 100vh;
         background: #141414;
-        display: flex;
+        display: none;
         flex-direction: column;
         align-items: center;
         justify-content: flex-start;
         position: relative;
         padding: 2rem 1rem;
       }
-
+      .hero::after {
+        content: "";
+        position: absolute;
+        bottom: 0;
+        left: 0;
+        width: 100%;
+        height: 200px;
+        background: linear-gradient(to top, rgba(20, 20, 20, 0.8), transparent);
+        pointer-events: none;
+      }
       .hero-image {
         width: 100%;
         max-width: 600px;
         margin-bottom: 1rem;
         z-index: 3;
         position: relative;
+        transition: transform 0.3s ease;
       }
       .hero-image img {
         width: 100%;
         display: block;
         border-radius: 12px;
         box-shadow: 0 0 20px rgba(0, 0, 0, 0.5);
-        transition: transform 0.3s;
       }
-      @keyframes moveImage {
-        0% {
-          transform: scale(1) rotate(0deg);
-          opacity: 1;
-        }
-        25% {
-          transform: scale(1.2) rotate(180deg);
-          opacity: 0.8;
-        }
-        50% {
-          transform: scale(0.8) rotate(360deg);
-          opacity: 0.5;
-        }
-        75% {
-          transform: scale(1.1) rotate(540deg);
-          opacity: 0.3;
-        }
-        100% {
-          transform: scale(1) rotate(720deg);
-          opacity: 1;
-        }
-      }
-      .image-open {
-        animation: moveImage 2s ease-out forwards;
-      }
-
-      #portalParticles {
-        position: absolute;
-        top: 0;
-        left: 50%;
-        transform: translateX(-50%);
-        max-width: 600px;
-        width: 100%;
-        height: 100%;
-        pointer-events: none;
-        z-index: 4;
-      }
-
-      #surprise-character {
-        display: none;
-        position: absolute;
-        z-index: 10;
-        max-width: 200px;
-        width: 30vw;
-        left: 50%;
-        top: 50%;
-        transform: translate(-50%, -50%);
-      }
-      @keyframes characterPop {
-        0% { transform: scale(0) translateY(100px) translateX(-50%); opacity: 0; }
-        50% { transform: scale(1.2) translateX(-50%); opacity: 1; }
-        100% { transform: scale(1) translateY(0) translateX(-50%); opacity: 1; }
-      }
-      .character-appear {
-        animation: characterPop 1s forwards;
-      }
-
-      @media (max-width: 768px) {
-        #surprise-character {
-          width: 40vw;
-          top: 40%;
-        }
-      }
-      @media (max-width: 480px) {
-        #surprise-character {
-          width: 50vw;
-          top: 30%;
-        }
-      }
-
       .hero-content {
         background: rgba(255, 255, 255, 0.1);
         backdrop-filter: blur(15px);
@@ -217,17 +220,23 @@
         margin-bottom: 1.5rem;
         max-width: 600px;
         z-index: 3;
+        opacity: 0;
+        animation: revealTitle 1s forwards 1s;
       }
       .hero-content h1 {
         font-size: clamp(1.8rem, 5vw, 2.5rem);
         margin-bottom: 0.5rem;
         text-shadow: 0px 0px 10px rgba(229, 9, 20, 0.8);
+        font-family: 'Cinzel', serif;
       }
       .hero-content p {
         font-size: clamp(1rem, 2.5vw, 1.2rem);
         margin-bottom: 1rem;
       }
-
+      @keyframes revealTitle {
+        0% { opacity: 0; transform: translateY(20px); }
+        100% { opacity: 1; transform: translateY(0); }
+      }
       .hero-buttons {
         display: flex;
         flex-wrap: wrap;
@@ -249,7 +258,7 @@
       }
       .hero-buttons .btn:hover {
         background: #f40612;
-        transform: scale(1.1) rotate(-2deg);
+        transform: scale(1.05);
         box-shadow: 0px 0px 20px rgba(229, 9, 20, 0.8);
       }
 
@@ -281,6 +290,9 @@
         font-size: clamp(20px, 6vw, 24px);
         margin-bottom: 15px;
         text-align: center;
+        opacity: 0;
+        animation: revealTitle 1s forwards;
+        font-family: 'Cinzel', serif;
       }
       .row {
         display: flex;
@@ -305,7 +317,7 @@
         animation: fadeInUp 1s forwards;
       }
       .card:hover {
-        transform: scale(1.1);
+        transform: scale(1.15);
         z-index: 10;
         filter: brightness(1.2);
       }
@@ -317,6 +329,25 @@
       }
       .card:hover img {
         transform: scale(1.1);
+      }
+      .card .card-info {
+        position: absolute;
+        bottom: 0;
+        left: 0;
+        width: 100%;
+        background: rgba(0, 0, 0, 0.8);
+        padding: 10px;
+        opacity: 0;
+        transform: translateY(100%);
+        transition: opacity 0.5s ease, transform 0.5s;
+      }
+      .card:hover .card-info {
+        opacity: 1;
+        transform: translateY(0);
+      }
+      .card-info p {
+        font-size: 0.9rem;
+        color: #fff;
       }
       @keyframes fadeInUp {
         0% { opacity: 0; transform: translateY(20px); }
@@ -399,6 +430,9 @@
         .special-message {
           font-size: 0.85rem;
         }
+        .card .card-info p {
+          font-size: 0.8rem;
+        }
       }
 
       /******************************************************
@@ -413,13 +447,62 @@
         z-index: 1;
         pointer-events: none;
       }
+
+      /******************************************************
+       *                FULLSCREEN BUTTON
+       ******************************************************/
+      .fullscreen-btn {
+        background: #e50914;
+        color: #fff;
+        padding: 5px 10px;
+        border: none;
+        border-radius: 5px;
+        cursor: pointer;
+        font-size: 14px;
+        transition: transform 0.3s, box-shadow 0.3s;
+      }
+      .fullscreen-btn:hover {
+        transform: scale(1.05);
+        box-shadow: 0 0 10px rgba(229, 9, 20, 0.7);
+      }
+
+      /******************************************************
+       *                ANIMATIONS
+       ******************************************************/
+      @keyframes fadeIn {
+        0% { opacity: 0; }
+        100% { opacity: 1; }
+      }
+      @keyframes fadeOut {
+        0% { opacity: 1; }
+        100% { opacity: 0; }
+      }
     </style>
   </head>
   <body>
+    <!-- Netflix Loading Screen -->
+    <div class="loading-screen">
+      <video class="loading-video" autoplay muted id="loadingVideo" volume="1.0">
+        <source src="netflix_intro.mp4" type="video/mp4" />
+        Votre navigateur ne supporte pas la balise vidéo.
+      </video>
+    </div>
+
     <!-- Intro Screen -->
-    <div class="intro-screen" id="intro">
+    <div class="intro-screen" id="intro" role="dialog" aria-label="Écran d'introduction pour l'anniversaire d'Amat">
       <h1>✨ Es-tu prête à découvrir ta surprise, Amat ? ✨</h1>
       <button class="intro-btn" onclick="enterSite()">Oui, je suis prête ! 🚀</button>
+    </div>
+
+    <!-- Video Intermédiaire -->
+    <div class="video-screen" id="videoScreen">
+      <iframe
+        id="youtubeVideo"
+        src=""
+        allow="autoplay; encrypted-media"
+        allowfullscreen
+      ></iframe>
+      <button class="continue-btn" id="continueBtn" onclick="showMainPage()">Continuer</button>
     </div>
 
     <!-- Header -->
@@ -429,14 +512,13 @@
         Joyeux Anniversaire Amat !
       </div>
       <img src="netflix_logo.png" alt="Netflix Logo" />
+      <button class="fullscreen-btn" onclick="toggleFullScreen()">Plein écran</button>
     </header>
 
     <!-- Section Hero -->
-    <section class="hero">
+    <section class="hero" id="mainContent">
       <div class="hero-image">
-        <img src="portail.JPG" alt="Portail Temporel" />
-        <canvas id="portalParticles" style="position: absolute; z-index: 4;"></canvas>
-        <img id="surprise-character" src="jamie.png" alt="Jamie" style="display: none; position: absolute; z-index: 10; max-width: 200px;">
+        <img src="portail.JPG" alt="Portail Temporel d'Outlander" />
       </div>
       <div class="hero-content">
         <h1>Outlander</h1>
@@ -446,7 +528,6 @@
         <button class="btn" onclick="showMessage('msg1')">Message de Jamie</button>
         <button class="btn" onclick="showMessage('msg2')">Message de Claire</button>
         <button class="btn" onclick="showScottishWish()">Vœu Écossais</button>
-        <button class="btn" onclick="openTimePortal()">Ouvrir le Portail Temporel</button>
       </div>
       <p id="msg1" class="special-message">
         Joyeux anniversaire, Sassenach ! Que ton jour spécial soit aussi magique que les pierres de Craigh na Dun ! - Jamie
@@ -457,7 +538,6 @@
       <p id="wish" class="special-message">
         Que les anciens esprits écossais te bénissent, Amat ! Que ton année soit aussi riche que les Highlands ! - Slàinte Mhath !
       </p>
-      <p id="surprise-message" class="special-message" style="display: none; font-size: 1.2rem;"></p>
     </section>
 
     <!-- Content Row: Outlander Dossiers -->
@@ -466,32 +546,39 @@
       <h2>Vraiment portrait craché de Sassenach !</h2>
       <div class="row">
         <div class="card">
-          <img src="amat.JPG" alt="Saison 1" />
+          <img src="amat.JPG" alt="Photo d'Amat dans une pose héroïque pour la saison 1" loading="lazy" />
+          <div class="card-info"><p>Saison 1 - Amat en action</p></div>
         </div>
         <div class="card">
-          <img src="amat2.JPG" alt="Saison 2" />
+          <img src="amat2.JPG" alt="Photo d'Amat poursuivant l'aventure pour la saison 2" loading="lazy" />
+          <div class="card-info"><p>Saison 2 - L'aventure continue</p></div>
         </div>
         <div class="card">
-          <img src="amat3.JPG" alt="Saison 3" />
+          <img src="amat3.JPG" alt="Photo d'Amat en pleine puissance pour la saison 3" loading="lazy" />
+          <div class="card-info"><p>Saison 3 - Toujours plus fort</p></div>
         </div>
       </div>
     </section>
 
     <!-- Content Row: Héros d'Anniversaire -->
-    <section class="content했던-row">
+    <section class="content-row">
       <h2>Tes héros préférés fêtent ton anniversaire</h2>
       <div class="row">
         <div class="card">
-          <img src="anniversaire.JPG" alt="Claire" />
+          <img src="anniversaire.JPG" alt="Claire célébrant l'anniversaire d'Amat" loading="lazy" />
+          <div class="card-info"><p>Les outlanders fêtent l'anniversaire de Amat</p></div>
         </div>
         <div class="card">
-          <img src="anniversaire2.JPG" alt="Jamie" />
+          <img src="anniversaire2.JPG" alt="Jamie célébrant l'anniversaire d'Amat" loading="lazy" />
+          <div class="card-info"><p>Jamie - Le Highlander</p></div>
         </div>
         <div class="card">
-          <img src="anniversaire3.JPG" alt="Black Jack" />
+          <img src="anniversaire3.JPG" alt="Black Jack dans une scène sombre" loading="lazy" />
+          <div class="card-info"><p>Claire - L'infirmière du temps</p></div>
         </div>
         <div class="card">
-          <img src="anniversaire4.JPG" alt="Geillis" />
+          <img src="anniversaire4.JPG" alt="Geillis dans une pose mystique" loading="lazy" />
+          <div class="card-info"><p>Une esprit de fête</p></div>
         </div>
       </div>
     </section>
@@ -506,10 +593,12 @@
       <br />
       <div class="row">
         <div class="card">
-          <img src="gateau.JPG" alt="Gâteau spécial Ramadan" />
+          <img src="gateau.JPG" alt="Gâteau spécial Ramadan pour Amat" loading="lazy" />
+          <div class="card-info"><p>Gâteau Ramadan - Saveur sacrée</p></div>
         </div>
         <div class="card">
-          <img src="gateau2.JPG" alt="Gâteau spécial Outlander" />
+          <img src="gateau2.JPG" alt="Gâteau spécial Outlander pour Amat" loading="lazy" />
+          <div class="card-info"><p>Gâteau Outlander - Goût d'Écosse</p></div>
         </div>
       </div>
       <p class="funny-choice">
@@ -522,162 +611,100 @@
 
     <!-- Audio de fond -->
     <audio id="background-audio" loop>
-      <source src="outlander_sound2.mp3" type="audio/mpeg" />
+      <source src="outlander_theme.mp3" type="audio/mpeg" />
       Votre navigateur ne supporte pas la lecture audio.
     </audio>
-    <audio id="portal-sound">
-      <source src="portal_sound.mp3" type="audio/mpeg" />
-      Votre navigateur ne supporte pas la lecture audio.
+
+    <!-- Audio pour effet sonore -->
+    <audio id="stone-sound">
+      <source src="stone_sound.mp3" type="audio/mpeg" />
     </audio>
 
     <!-- JavaScript -->
     <script>
-      const audio = document.getElementById("background-audio");
-      const portalSound = document.getElementById("portal-sound");
-      const portalCanvas = document.getElementById("portalParticles");
-      const pCtx = portalCanvas.getContext("2d");
-      portalCanvas.width = 600;
-      portalCanvas.height = 400;
-
-      let particles = [];
-      function createParticles() {
-        particles = [];
-        for (let i = 0; i < 50; i++) {
-          particles.push({
-            x: portalCanvas.width / 2,
-            y: portalCanvas.height / 2,
-            radius: Math.random() * 3 + 1,
-            speedX: (Math.random() - 0.5) * 8,
-            speedY: (Math.random() - 0.5) * 8,
-            life: 1,
+      document.addEventListener("DOMContentLoaded", function () {
+          // Récupération des éléments
+          const loadingScreen = document.querySelector(".loading-screen");
+          const introScreen = document.getElementById("intro");
+          const videoScreen = document.getElementById("videoScreen");
+          const mainContent = document.getElementById("mainContent");
+          const header = document.querySelector(".header");
+          const youtubeVideo = document.getElementById("youtubeVideo");
+          const stoneSound = document.getElementById("stone-sound");
+          const loadingVideo = document.getElementById("loadingVideo");
+    
+          // Assurer que tout est caché au démarrage
+          function hideAllScreens() {
+              loadingScreen.style.display = "none";
+              introScreen.style.display = "none";
+              videoScreen.style.display = "none";
+              mainContent.style.display = "none";
+              header.style.display = "none";
+          }
+    
+          // Fonction pour afficher uniquement un écran
+          function showScreen(screenId) {
+              hideAllScreens();
+              document.getElementById(screenId).style.display = "flex";
+          }
+    
+          // Masquer tous les écrans au démarrage et afficher l'écran de chargement
+          hideAllScreens();
+          loadingScreen.style.display = "flex";
+    
+          // Attendre que la vidéo Netflix se termine avant d'afficher l'écran d'intro
+          loadingVideo.onended = function () {
+              showScreen("intro");
+          };
+    
+          // Sécurité : Si la vidéo ne déclenche pas `onended`, forcer le passage après 4 secondes
+          setTimeout(() => {
+              showScreen("intro");
+          }, 4000);
+    
+          // Lorsque l'utilisateur clique sur "Oui, je suis prête !"
+          window.enterSite = function () {
+              stoneSound.play();
+              showScreen("videoScreen");
+              youtubeVideo.src = "https://www.youtube.com/embed/weexKuywDC8?autoplay=1&mute=0";
+          };
+    
+          // Lorsque l'utilisateur clique sur "Continuer"
+          window.showMainPage = function () {
+              youtubeVideo.src = ""; // Arrêter la vidéo
+              setTimeout(() => {
+                  showScreen("mainContent");
+                  header.style.display = "flex";
+                  document.getElementById("background-audio").play();
+              }, 1000);
+          };
+    
+          // Afficher le bouton "Continuer" après 16s de vidéo
+          setTimeout(() => {
+              if (videoScreen.style.display === "flex") {
+                  document.getElementById("continueBtn").style.display = "block";
+              }
+          }, 16000);
+    
+          // Gestion du scroll pour l'effet du header
+          window.addEventListener("scroll", () => {
+              if (window.scrollY > 50) {
+                  header.classList.add("scrolled");
+              } else {
+                  header.classList.remove("scrolled");
+              }
           });
-        }
-      }
-
-      function animateParticles() {
-        pCtx.clearRect(0, 0, portalCanvas.width, portalCanvas.height);
-        pCtx.fillStyle = "rgba(229, 9, 20, 0.8)";
-        particles.forEach((p, i) => {
-          pCtx.beginPath();
-          pCtx.arc(p.x, p.y, p.radius, 0, Math.PI * 2);
-          pCtx.fill();
-          p.x += p.speedX;
-          p.y += p.speedY;
-          p.life -= 0.02;
-          if (p.life <= 0) particles.splice(i, 1);
-        });
-        if (particles.length > 0) requestAnimationFrame(animateParticles);
-      }
-
-      function playAudio() {
-        audio.play().catch((error) => console.log("Erreur de lecture audio : ", error));
-      }
-
-      function enterSite() {
-        const intro = document.getElementById("intro");
-        intro.style.animation = "fadeOut 2s forwards";
-        setTimeout(() => {
-          intro.style.display = "none";
-          playAudio();
-        }, 2000);
-      }
-
-      function typeMessage(element, message, speed = 100) {
-        let i = 0;
-        element.textContent = "";
-        element.style.display = "block";
-        function type() {
-          if (i < message.length) {
-            element.textContent += message.charAt(i);
-            i++;
-            setTimeout(type, speed);
-          }
-        }
-        type();
-      }
-
-      window.addEventListener("scroll", () => {
-        const header = document.querySelector(".header");
-        if (window.scrollY > 50) {
-          header.classList.add("scrolled");
-        } else {
-          header.classList.remove("scrolled");
-        }
+    
+          // Affichage des messages spéciaux
+          window.showMessage = function (messageId) {
+              document.querySelectorAll(".special-message").forEach((msg) => {
+                  msg.style.display = "none";
+              });
+              document.getElementById(messageId).style.display = "block";
+              stoneSound.play();
+          };
       });
-
-      function showMessage(messageId) {
-        const messages = document.querySelectorAll(".special-message");
-        messages.forEach((msg) => (msg.style.display = "none"));
-        document.getElementById(messageId).style.display = "block";
-      }
-
-      function showScottishWish() {
-        const messages = document.querySelectorAll(".special-message");
-        messages.forEach((msg) => (msg.style.display = "none"));
-        document.getElementById("wish").style.display = "block";
-        const surprise = document.getElementById("surprise-message");
-        typeMessage(surprise, "Surprise, Amat ! Un trésor t’attend dans les Highlands !");
-      }
-
-      function openTimePortal() {
-        const heroImg = document.querySelector(".hero-image img");
-        const body = document.body;
-        const character = document.getElementById("surprise-character");
-        heroImg.classList.add("image-open");
-        createParticles();
-        animateParticles();
-        body.style.background = "url('highlands.jpg') center/cover no-repeat";
-        portalSound.play().catch((error) => console.log("Erreur son portail : ", error));
-        character.style.display = "block";
-        character.classList.add("character-appear");
-        setTimeout(() => {
-          heroImg.classList.remove("image-open");
-          body.style.background = "#141414";
-          portalSound.pause();
-          portalSound.currentTime = 0;
-          character.style.display = "none";
-          character.classList.remove("character-appear");
-        }, 2000);
-      }
-
-      window.onbeforeunload = function () {
-        window.scrollTo(0, 0);
-      };
-      window.onload = function () {
-        window.scrollTo(0, 0);
-      };
-
-      const canvas = document.getElementById("starsCanvas");
-      const ctx = canvas.getContext("2d");
-      canvas.width = window.innerWidth;
-      canvas.height = window.innerHeight;
-
-      let stars = [];
-      for (let i = 0; i < 100; i++) {
-        stars.push({
-          x: Math.random() * canvas.width,
-          y: Math.random() * canvas.height,
-          radius: Math.random() * 2,
-          speed: Math.random() * 2,
-        });
-      }
-
-      function animateStars() {
-        ctx.clearRect(0, 0, canvas.width, canvas.height);
-        ctx.fillStyle = "rgba(255, 255, 255, 0.8)";
-        stars.forEach((star) => {
-          ctx.beginPath();
-          ctx.arc(star.x, star.y, star.radius, 0, Math.PI * 2);
-          ctx.fill();
-          star.y += star.speed;
-          if (star.y > canvas.height) {
-            star.y = 0;
-            star.x = Math.random() * canvas.width;
-          }
-        });
-        requestAnimationFrame(animateStars);
-      }
-      animateStars();
     </script>
+  
   </body>
 </html>
