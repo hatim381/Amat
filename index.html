@@ -1,418 +1,538 @@
 <!DOCTYPE html>
 <html lang="fr">
-  <head>
+<head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Netflix Outlander - Amat's Journey</title>
     <link rel="icon" type="image/png" href="netflix_logo.png" />
     <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;700&family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
     <style>
-      * {
-        margin: 0;
-        padding: 0;
-        box-sizing: border-box;
-        font-family: 'Poppins', sans-serif;
-      }
-      body {
-        background: #0d1a26;
-        color: #e6d9b7;
-        overflow-x: hidden;
-        position: relative;
-        background-image: url('stone_texture.jpg');
-        background-size: cover;
-      }
-      .intro-screen {
-        position: fixed;
-        top: 0;
-        left: 0;
-        width: 100%;
-        height: 100vh;
-        background: url("portail1.JPG") center/cover no-repeat;
-        display: flex;
-        flex-direction: column;
-        justify-content: center;
-        align-items: center;
-        z-index: 9999;
-        text-align: center;
-        animation: fadeIn 2s;
-        box-shadow: inset 0 0 100px rgba(0, 0, 0, 0.8);
-      }
-      .intro-screen h1 {
-        font-family: 'Cinzel', serif;
-        font-size: clamp(24px, 5vw, 36px);
-        margin-bottom: 20px;
-        text-shadow: 0 0 15px #b8860b;
-      }
-      .intro-btn {
-        background: #8b4513;
-        color: #fff;
-        padding: 15px 25px;
-        border: 2px solid #e6d9b7;
-        border-radius: 8px;
-        cursor: pointer;
-        font-size: clamp(16px, 4vw, 18px);
-        transition: transform 0.3s, box-shadow 0.3s;
-      }
-      .intro-btn:hover {
-        transform: scale(1.1);
-        box-shadow: 0 0 20px #b8860b;
-      }
-      @keyframes fadeIn {
-        0% { opacity: 0; }
-        100% { opacity: 1; }
-      }
-      @keyframes fadeOut {
-        0% { opacity: 1; }
-        100% { opacity: 0; }
-      }
-      .header {
-        position: fixed;
-        top: 0;
-        left: 0;
-        width: 100%;
-        padding: 10px 4%;
-        background: rgba(13, 26, 38, 0.9);
-        display: flex;
-        align-items: center;
-        justify-content: space-between;
-        z-index: 100;
-        transition: background 0.3s;
-      }
-      .header.scrolled {
-        background: #0d1a26;
-      }
-      .header img {
-        height: clamp(50px, 10vw, 75px);
-      }
-      .logo {
-        font-family: 'Cinzel', serif;
-        font-size: clamp(20px, 5vw, 32px);
-        color: #b8860b;
-        font-weight: bold;
-        text-align: center;
-        animation: glow 2s infinite alternate;
-      }
-      @keyframes glow {
-        0% { text-shadow: 0 0 5px #b8860b; }
-        100% { text-shadow: 0 0 20px #b8860b; }
-      }
-      .hero {
-        width: 100%;
-        min-height: 100vh;
-        background: linear-gradient(to bottom, rgba(13, 26, 38, 0.8), rgba(0, 0, 0, 0.9));
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-        justify-content: flex-start;
-        position: relative;
-        padding: 1rem;
-      }
-      .hero-image {
-        width: 100%;
-        max-width: 600px;
-        margin-bottom: 1rem;
-        position: relative;
-        filter: drop-shadow(0 0 20px #b8860b);
-      }
-      .hero-image img {
-        width: 100%;
-        display: block;
-        border-radius: 12px;
-      }
-      .hero-content {
-        background: rgba(139, 69, 19, 0.2);
-        backdrop-filter: blur(10px);
-        border: 1px solid #e6d9b7;
-        padding: 1.5rem;
-        border-radius: 12px;
-        box-shadow: 0 0 30px rgba(184, 134, 11, 0.5);
-        text-align: center;
-        margin-bottom: 1rem;
-        max-width: 600px;
-      }
-      .hero-content h1 {
-        font-family: 'Cinzel', serif;
-        font-size: clamp(1.8rem, 5vw, 2.5rem);
-        margin-bottom: 0.5rem;
-        color: #b8860b;
-        text-shadow: 0 0 15px rgba(184, 134, 11, 0.8);
-      }
-      .hero-content p {
-        font-size: clamp(1rem, 2.5vw, 1.2rem);
-        margin-bottom: 1rem;
-      }
-      .hero-buttons {
-        display: flex;
-        flex-wrap: wrap;
-        gap: 0.5rem;
-        justify-content: center;
-        margin-bottom: 1rem;
-      }
-      .hero-buttons .btn {
-        background: #8b4513;
-        color: #e6d9b7;
-        padding: 0.8rem 1.2rem;
-        border: 1px solid #b8860b;
-        border-radius: 5px;
-        cursor: pointer;
-        font-size: clamp(0.9rem, 2vw, 1rem);
-        transition: all 0.3s;
-      }
-      .hero-buttons .btn:hover {
-        background: #b8860b;
-        transform: scale(1.1) rotate(-2deg);
-        box-shadow: 0 0 20px #b8860b;
-      }
-      .special-message {
-        display: none;
-        position: relative;
-        background: rgba(13, 26, 38, 0.9);
-        padding: 1rem;
-        border-radius: 12px;
-        box-shadow: 0 0 20px rgba(184, 134, 11, 0.8);
-        color: #e6d9b7;
-        max-width: 600px;
-        margin: 0 auto 1rem;
-        text-align: center;
-        font-size: 1rem;
-      }
-      .content-row {
-        padding: 10px 4% 20px;
-      }
-      .content-row h2 {
-        font-family: 'Cinzel', serif;
-        font-size: clamp(20px, 6vw, 24px);
-        margin-bottom: 15px;
-        text-align: center;
-        color: #b8860b;
-      }
-      .row {
-        display: flex;
-        overflow-x: auto;
-        gap: 10px;
-        padding-bottom: 20px;
-        justify-content: center;
-      }
-      .row::-webkit-scrollbar {
-        display: none;
-      }
-      .card {
-        min-width: clamp(150px, 25vw, 200px);
-        height: clamp(200px, 40vw, 300px);
-        background: #333;
-        border-radius: 5px;
-        overflow: hidden;
-        position: relative;
-        transition: transform 0.3s, filter 0.3s;
-        opacity: 0;
-        transform: translateY(20px);
-        animation: fadeInUp 1s forwards;
-      }
-      .card:hover {
-        transform: scale(1.1);
-        filter: brightness(1.2) drop-shadow(0 0 10px #b8860b);
-      }
-      .card img {
-        width: 100%;
-        height: 100%;
-        object-fit: cover;
-        transition: transform 0.3s ease-in-out;
-      }
-      .card:hover img {
-        transform: scale(1.1);
-      }
-      @keyframes fadeInUp {
-        0% { opacity: 0; transform: translateY(20px); }
-        100% { opacity: 1; transform: translateY(0); }
-      }
-      .funny-text {
-        text-align: center;
-        font-size: clamp(14px, 4vw, 18px);
-        margin: 15px auto;
-        color: #b8860b;
-        font-style: italic;
-        animation: bounce 1.5s infinite alternate;
-      }
-      @keyframes bounce {
-        from { transform: translateY(0); }
-        to { transform: translateY(-10px); }
-      }
-      #fogCanvas {
-        position: fixed;
-        top: 0;
-        left: 0;
-        width: 100%;
-        height: 100%;
-        z-index: 0;
-        pointer-events: none;
-        opacity: 0.3;
-      }
-      @media (max-width: 768px) {
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Poppins', sans-serif;
+        }
+        body {
+            background: #0d1a26;
+            color: #e6d9b7;
+            overflow-x: hidden;
+            position: relative;
+            background-image: url('stone_texture.jpg');
+            background-size: cover;
+        }
+        .intro-screen {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100vh;
+            background: url("portail1.JPG") center/cover no-repeat;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            z-index: 9999;
+            text-align: center;
+            animation: fadeIn 2s;
+            box-shadow: inset 0 0 100px rgba(0, 0, 0, 0.8);
+        }
+        .intro-screen h1 {
+            font-family: 'Cinzel', serif;
+            font-size: clamp(24px, 5vw, 36px);
+            margin-bottom: 20px;
+            text-shadow: 0 0 15px #b8860b;
+        }
+        .intro-btn {
+            background: #8b4513;
+            color: #fff;
+            padding: 15px 25px;
+            border: 2px solid #e6d9b7;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: clamp(16px, 4vw, 18px);
+            transition: transform 0.3s, box-shadow 0.3s;
+        }
+        .intro-btn:hover {
+            transform: scale(1.1);
+            box-shadow: 0 0 20px #b8860b;
+        }
+        @keyframes fadeIn {
+            0% { opacity: 0; }
+            100% { opacity: 1; }
+        }
+        @keyframes fadeOut {
+            0% { opacity: 1; }
+            100% { opacity: 0; }
+        }
         .header {
-          flex-direction: column;
-          padding: 10px;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            padding: 10px 4%;
+            background: rgba(13, 26, 38, 0.9);
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            z-index: 100;
+            transition: background 0.3s;
+        }
+        .header.scrolled {
+            background: #0d1a26;
         }
         .header img {
-          height: clamp(40px, 8vw, 60px);
+            height: clamp(50px, 10vw, 75px);
         }
         .logo {
-          margin-bottom: 10px;
+            font-family: 'Cinzel', serif;
+            font-size: clamp(20px, 5vw, 32px);
+            color: #b8860b;
+            font-weight: bold;
+            text-align: center;
+            animation: glow 2s infinite alternate;
         }
-      }
+        @keyframes glow {
+            0% { text-shadow: 0 0 5px #b8860b; }
+            100% { text-shadow: 0 0 20px #b8860b; }
+        }
+        .hero {
+            width: 100%;
+            min-height: 100vh;
+            background: linear-gradient(to bottom, rgba(13, 26, 38, 0.8), rgba(0, 0, 0, 0.9));
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: flex-start;
+            position: relative;
+            padding: 1rem;
+        }
+        .hero-image {
+            width: 100%;
+            max-width: 600px;
+            margin-bottom: 1rem;
+            position: relative;
+            filter: drop-shadow(0 0 20px #b8860b);
+        }
+        .hero-image img {
+            width: 100%;
+            display: block;
+            border-radius: 12px;
+        }
+        .hero-content {
+            background: rgba(139, 69, 19, 0.2);
+            backdrop-filter: blur(10px);
+            border: 1px solid #e6d9b7;
+            padding: 1.5rem;
+            border-radius: 12px;
+            box-shadow: 0 0 30px rgba(184, 134, 11, 0.5);
+            text-align: center;
+            margin-bottom: 1rem;
+            max-width: 600px;
+        }
+        .hero-content h1 {
+            font-family: 'Cinzel', serif;
+            font-size: clamp(1.8rem, 5vw, 2.5rem);
+            margin-bottom: 0.5rem;
+            color: #b8860b;
+            text-shadow: 0 0 15px rgba(184, 134, 11, 0.8);
+        }
+        .hero-content p {
+            font-size: clamp(1rem, 2.5vw, 1.2rem);
+            margin-bottom: 1rem;
+        }
+        .hero-buttons {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.5rem;
+            justify-content: center;
+            margin-bottom: 1rem;
+        }
+        .hero-buttons .btn {
+            background: #8b4513;
+            color: #e6d9b7;
+            padding: 0.8rem 1.2rem;
+            border: 1px solid #b8860b;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: clamp(0.9rem, 2vw, 1rem);
+            transition: all 0.3s;
+        }
+        .hero-buttons .btn:hover {
+            background: #b8860b;
+            transform: scale(1.1) rotate(-2deg);
+            box-shadow: 0 0 20px #b8860b;
+        }
+        .special-message {
+            display: none;
+            position: relative;
+            background: rgba(13, 26, 38, 0.9);
+            padding: 1rem;
+            border-radius: 12px;
+            box-shadow: 0 0 20px rgba(184, 134, 11, 0.8);
+            color: #e6d9b7;
+            max-width: 600px;
+            margin: 0 auto 1rem;
+            text-align: center;
+            font-size: 1rem;
+        }
+        .content-row {
+            padding: 10px 4% 20px;
+        }
+        .content-row h2 {
+            font-family: 'Cinzel', serif;
+            font-size: clamp(20px, 6vw, 24px);
+            margin-bottom: 15px;
+            text-align: center;
+            color: #b8860b;
+        }
+        .row {
+            display: flex;
+            overflow-x: auto;
+            gap: 10px;
+            padding-bottom: 20px;
+            justify-content: center;
+        }
+        .row::-webkit-scrollbar {
+            display: none;
+        }
+        .card {
+            min-width: clamp(150px, 25vw, 200px);
+            height: clamp(200px, 40vw, 300px);
+            background: #333;
+            border-radius: 5px;
+            overflow: hidden;
+            position: relative;
+            transition: transform 0.3s, filter 0.3s;
+            opacity: 0;
+            transform: translateY(20px);
+            animation: fadeInUp 1s forwards;
+        }
+        .card:hover {
+            transform: scale(1.1);
+            filter: brightness(1.2) drop-shadow(0 0 10px #b8860b);
+        }
+        .card img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.3s ease-in-out;
+        }
+        .card:hover img {
+            transform: scale(1.1);
+        }
+        @keyframes fadeInUp {
+            0% { opacity: 0; transform: translateY(20px); }
+            100% { opacity: 1; transform: translateY(0); }
+        }
+        .funny-text {
+            text-align: center;
+            font-size: clamp(14px, 4vw, 18px);
+            margin: 15px auto;
+            color: #b8860b;
+            font-style: italic;
+            animation: bounce 1.5s infinite alternate;
+        }
+        @keyframes bounce {
+            from { transform: translateY(0); }
+            to { transform: translateY(-10px); }
+        }
+        #fogCanvas {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 0;
+            pointer-events: none;
+            opacity: 0.3;
+        }
+        /* Nouveaux styles pour Jamie */
+        .jamie-dialogue {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            background: rgba(13, 26, 38, 0.9);
+            color: #e6d9b7;
+            padding: 15px;
+            border-radius: 12px;
+            box-shadow: 0 0 20px rgba(184, 134, 11, 0.8);
+            font-family: 'Cinzel', serif;
+            font-size: 1rem;
+            max-width: 300px;
+            text-align: center;
+            display: none;
+            animation: fadeIn 1s;
+        }
+        .jamie-dialogue img {
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            margin-bottom: 10px;
+        }
+        @keyframes fadeIn {
+            0% { opacity: 0; }
+            100% { opacity: 1; }
+        }
+        .jamie-dialogue span {
+            font-style: italic;
+            color: #b8860b;
+        }
+        /* Bouton d'appel de Jamie */
+        .call-jamie {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            background: #8b4513;
+            color: #fff;
+            padding: 10px 15px;
+            border: 2px solid #e6d9b7;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 1rem;
+            transition: transform 0.3s, box-shadow 0.3s;
+        }
+        .call-jamie:hover {
+            transform: scale(1.1);
+            box-shadow: 0 0 20px #b8860b;
+        }
+        /* Styles pour Sassenach */
+        .sassenach-dialogue {
+            position: fixed;
+            bottom: 20px;
+            left: 20px;
+            background: rgba(13, 26, 38, 0.9);
+            color: #e6d9b7;
+            padding: 15px;
+            border-radius: 12px;
+            box-shadow: 0 0 20px rgba(184, 134, 11, 0.8);
+            font-family: 'Cinzel', serif;
+            font-size: 1rem;
+            max-width: 300px;
+            text-align: center;
+            display: none;
+            animation: fadeIn 1s;
+        }
+        .sassenach-dialogue img {
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            margin-bottom: 10px;
+        }
+        .sassenach-dialogue span {
+            font-style: italic;
+            color: #b8860b;
+        }
+        /* Bouton d'appel de Sassenach */
+        .call-sassenach {
+            position: fixed;
+            bottom: 20px;
+            left: 20px;
+            background: #8b4513;
+            color: #fff;
+            padding: 10px 15px;
+            border: 2px solid #e6d9b7;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 1rem;
+            transition: transform 0.3s, box-shadow 0.3s;
+        }
+        .call-sassenach:hover {
+            transform: scale(1.1);
+            box-shadow: 0 0 20px #b8860b;
+        }
     </style>
-  </head>
-  <body>
+</head>
+<body>
     <div class="intro-screen" id="intro">
-      <h1>Es-tu prête à traverser les pierres, Amat ?</h1>
-      <button class="intro-btn" onclick="enterSite()">Aye, Sassenach !</button>
+        <h1>Es-tu prête à traverser les pierres, Amat ?</h1>
+        <button class="intro-btn" onclick="enterSite()">Aye, Sassenach !</button>
     </div>
     <header class="header">
-      <div class="logo">
-        L'ÉVÉNEMENT DES HIGHLANDS ! <br />
-        Joyeux Anniversaire, Amat !
-      </div>
-      <img src="netflix_logo.png" alt="Netflix Logo" />
+        <div class="logo">
+            L'ÉVÉNEMENT DES HIGHLANDS ! <br />
+            Joyeux Anniversaire, Amat !
+        </div>
+        <img src="netflix_logo.png" alt="Netflix Logo" />
     </header>
     <section class="hero">
-      <div class="hero-image">
-        <img src="portail.JPG" alt="Portail Temporel" />
-      </div>
-      <div class="hero-content">
-        <h1>Outlander</h1>
-        <p>Amat, traverse les pierres de Craigh na Dun vers l'Écosse de 1743 avec Claire et Jamie pour ton anniversaire !</p>
-      </div>
-      <div class="hero-buttons">
-        <button class="btn" onclick="showMessage('msg1')">Paroles de Jamie</button>
-        <button class="btn" onclick="showMessage('msg2')">Paroles de Claire</button>
-        <button class="btn" onclick="showScottishWish()">Bénédiction Gaélique</button>
-      </div>
-      <p id="msg1" class="special-message">
-        "Joyeux anniversaire, Sassenach ! Que ton jour soit aussi sacré que les pierres anciennes." - Jamie
-      </p>
-      <p id="msg2" class="special-message">
-        "Amat, que ton cœur voyage à travers les âges avec amour et courage !" - Claire
-      </p>
-      <p id="wish" class="special-message">
-        "Slàinte Mhath, Amat ! Que les esprits des Highlands veillent sur toi !" - Bénédiction Gaélique
-      </p>
-      <p id="surprise-message" class="special-message" style="display: none; font-size: 1.2rem;"></p>
+        <div class="hero-image">
+            <img src="portail.JPG" alt="Portail Temporel" />
+        </div>
+        <div class="hero-content">
+            <h1>Outlander</h1>
+            <p>Amat, traverse les pierres de Craigh na Dun vers l'Écosse de 1743 avec Claire et Jamie pour ton anniversaire !</p>
+        </div>
+        <div class="hero-buttons">
+            <button class="btn" onclick="showMessage('msg1')">Paroles de Jamie</button>
+            <button class="btn" onclick="showMessage('msg2')">Paroles de Claire</button>
+            <button class="btn" onclick="showScottishWish()">Bénédiction Gaélique</button>
+        </div>
+        <p id="msg1" class="special-message">
+            "Joyeux anniversaire, Sassenach ! Que ton jour soit aussi sacré que les pierres anciennes." - Jamie
+        </p>
+        <p id="msg2" class="special-message">
+            "Amat, que ton cœur voyage à travers les âges avec amour et courage !" - Claire
+        </p>
+        <p id="wish" class="special-message">
+            "Slàinte Mhath, Amat ! Que les esprits des Highlands veillent sur toi !" - Bénédiction Gaélique
+        </p>
+        <p id="surprise-message" class="special-message" style="display: none; font-size: 1.2rem;"></p>
+        <!-- Nouveau bouton pour appeler Jamie -->
+        <button class="call-jamie" onclick="callJamie()">Appelle Jamie !</button>
+        <!-- Dialogue de Jamie -->
+        <div class="jamie-dialogue" id="jamie-dialogue">
+            <img src="jamie.png" alt="Jamie Fraser" />
+            <p><span>"Amat, que ta force soit celle des Highlands."</span></p>
+        </div>
+        <!-- Nouveau bouton pour appeler Sassenach -->
+        <button class="call-sassenach" onclick="callSassenach()">Appelle Sassenach !</button>
+        <!-- Dialogue de Sassenach -->
+        <div class="sassenach-dialogue" id="sassenach-dialogue">
+            <img src="claire.png" alt="Claire Fraser" />
+            <p><span>"Amat, n’oublie jamais : le temps est un cercle."</span></p>
+        </div>
     </section>
     <section class="content-row">
-      <h2>Les Chroniques d’Amat dans Outlander</h2>
-      <div class="row">
-        <div class="card">
-          <img src="amat.JPG" alt="Saison 1" />
+        <h2>Les Chroniques d’Amat dans Outlander</h2>
+        <div class="row">
+            <div class="card">
+                <img src="amat.JPG" alt="Saison 1" />
+            </div>
+            <div class="card">
+                <img src="amat2.JPG" alt="Saison 2" />
+            </div>
+            <div class="card">
+                <img src="amat3.JPG" alt="Saison 3" />
+            </div>
         </div>
-        <div class="card">
-          <img src="amat2.JPG" alt="Saison 2" />
-        </div>
-        <div class="card">
-          <img src="amat3.JPG" alt="Saison 3" />
-        </div>
-      </div>
     </section>
     <section class="content-row">
-      <h2>Tes Héros Te Souhaitent un Joyeux Anniversaire</h2>
-      <div class="row">
-        <div class="card">
-          <img src="anniversaire.JPG" alt="Claire" />
+        <h2>Tes Héros Te Souhaitent un Joyeux Anniversaire</h2>
+        <div class="row">
+            <div class="card">
+                <img src="anniversaire.JPG" alt="Claire" />
+            </div>
+            <div class="card">
+                <img src="anniversaire2.JPG" alt="Jamie" />
+            </div>
+            <div class="card">
+                <img src="anniversaire3.JPG" alt="Black Jack" />
+            </div>
+            <div class="card">
+                <img src="anniversaire4.JPG" alt="Geillis" />
+            </div>
         </div>
-        <div class="card">
-          <img src="anniversaire2.JPG" alt="Jamie" />
-        </div>
-        <div class="card">
-          <img src="anniversaire3.JPG" alt="Black Jack" />
-        </div>
-        <div class="card">
-          <img src="anniversaire4.JPG" alt="Geillis" />
-        </div>
-      </div>
     </section>
     <section class="content-row">
-      <h2>Un Festin des Highlands pour Amat</h2>
-      <p class="funny-text">
-        « Ces douceurs pourraient te transporter plus vite qu’un menhir, Amat ! »
-      </p>
-      <div class="row">
-        <div class="card">
-          <img src="gateau.JPG" alt="Gâteau spécial Ramadan" />
+        <h2>Un Festin des Highlands pour Amat</h2>
+        <p class="funny-text">
+            « Ces douceurs pourraient te transporter plus vite qu’un menhir, Amat ! »
+        </p>
+        <div class="row">
+            <div class="card">
+                <img src="gateau.JPG" alt="Gâteau spécial Ramadan" />
+            </div>
+            <div class="card">
+                <img src="gateau2.JPG" alt="Gâteau spécial Outlander" />
+            </div>
         </div>
-        <div class="card">
-          <img src="gateau2.JPG" alt="Gâteau spécial Outlander" />
-        </div>
-      </div>
     </section>
     <canvas id="fogCanvas"></canvas>
     <audio id="background-audio" loop>
-      <source src="outlander_theme.mp3" type="audio/mpeg" />
+        <source src="outlander_theme.mp3" type="audio/mpeg" />
     </audio>
     <script>
-      history.scrollRestoration = 'manual';
-      const audio = document.getElementById("background-audio");
-      function playAudio() {
-        audio.play().catch((error) => console.log("Erreur audio : ", error));
-      }
-      function enterSite() {
-        const intro = document.getElementById("intro");
-        intro.style.animation = "fadeOut 2s forwards";
-        setTimeout(() => {
-          intro.style.display = "none";
-          playAudio();
-          window.scrollTo(0, 0);
-        }, 2000);
-      }
-      function typeMessage(element, message, speed = 100) {
-        let i = 0;
-        element.textContent = "";
-        element.style.display = "block";
-        function type() {
-          if (i < message.length) {
-            element.textContent += message.charAt(i);
-            i++;
-            setTimeout(type, speed);
-          }
+        history.scrollRestoration = 'manual';
+        const audio = document.getElementById("background-audio");
+        function playAudio() {
+            audio.play().catch((error) => console.log("Erreur audio : ", error));
         }
-        type();
-      }
-      window.addEventListener("scroll", () => {
-        const header = document.querySelector(".header");
-        header.classList.toggle("scrolled", window.scrollY > 50);
-      });
-      function showMessage(messageId) {
-        document.querySelectorAll(".special-message").forEach(msg => msg.style.display = "none");
-        document.getElementById(messageId).style.display = "block";
-      }
-      function showScottishWish() {
-        showMessage("wish");
-        const surprise = document.getElementById("surprise-message");
-        typeMessage(surprise, "Un trésor gaélique t’attend dans les brumes, Amat !");
-      }
-      // Effet brouillard
-      const fogCanvas = document.getElementById("fogCanvas");
-      const fogCtx = fogCanvas.getContext("2d");
-      fogCanvas.width = window.innerWidth;
-      fogCanvas.height = window.innerHeight;
-      function drawFog() {
-        fogCtx.clearRect(0, 0, fogCanvas.width, fogCanvas.height);
-        fogCtx.fillStyle = "rgba(200, 200, 200, 0.1)";
-        for (let i = 0; i < 50; i++) {
-          fogCtx.beginPath();
-          fogCtx.arc(
-            Math.random() * fogCanvas.width,
-            Math.random() * fogCanvas.height,
-            Math.random() * 100,
-            0,
-            Math.PI * 2
-          );
-          fogCtx.fill();
+        function enterSite() {
+            const intro = document.getElementById("intro");
+            intro.style.animation = "fadeOut 2s forwards";
+            setTimeout(() => {
+                intro.style.display = "none";
+                playAudio();
+                window.scrollTo(0, 0);
+            }, 2000);
         }
-        requestAnimationFrame(drawFog);
-      }
-      window.onload = function() {
-        window.scrollTo(0, 0);
-        setTimeout(() => window.scrollTo(0, 0), 100);
-        drawFog();
-      };
+        function typeMessage(element, message, speed = 100) {
+            let i = 0;
+            element.textContent = "";
+            element.style.display = "block";
+            function type() {
+                if (i < message.length) {
+                    element.textContent += message.charAt(i);
+                    i++;
+                    setTimeout(type, speed);
+                }
+            }
+            type();
+        }
+        window.addEventListener("scroll", () => {
+            const header = document.querySelector(".header");
+            header.classList.toggle("scrolled", window.scrollY > 50);
+        });
+        function showMessage(messageId) {
+            document.querySelectorAll(".special-message").forEach(msg => msg.style.display = "none");
+            document.getElementById(messageId).style.display = "block";
+        }
+        function showScottishWish() {
+            showMessage("wish");
+            const surprise = document.getElementById("surprise-message");
+            typeMessage(surprise, "Un trésor gaélique t’attend dans les brumes, Amat !");
+        }
+        // Effet brouillard
+        const fogCanvas = document.getElementById("fogCanvas");
+        const fogCtx = fogCanvas.getContext("2d");
+        fogCanvas.width = window.innerWidth;
+        fogCanvas.height = window.innerHeight;
+        function drawFog() {
+            fogCtx.clearRect(0, 0, fogCanvas.width, fogCanvas.height);
+            fogCtx.fillStyle = "rgba(200, 200, 200, 0.1)";
+            for (let i = 0; i < 50; i++) {
+                fogCtx.beginPath();
+                fogCtx.arc(
+                    Math.random() * fogCanvas.width,
+                    Math.random() * fogCanvas.height,
+                    Math.random() * 100,
+                    0,
+                    Math.PI * 2
+                );
+                fogCtx.fill();
+            }
+            requestAnimationFrame(drawFog);
+        }
+        window.onload = function () {
+            window.scrollTo(0, 0);
+            setTimeout(() => window.scrollTo(0, 0), 100);
+            drawFog();
+        };
+        // Fonction pour appeler Jamie
+        function callJamie() {
+            const dialogue = document.getElementById('jamie-dialogue');
+            if (dialogue.style.display === 'none' || dialogue.style.display === '') {
+                dialogue.style.display = 'block';
+                setTimeout(() => {
+                    dialogue.style.display = 'none';
+                }, 5000); // Disparaît après 5 secondes
+            } else {
+                dialogue.style.display = 'none';
+            }
+        }
+        // Fonction pour appeler Sassenach
+        function callSassenach() {
+            const dialogue = document.getElementById('sassenach-dialogue');
+            if (dialogue.style.display === 'none' || dialogue.style.display === '') {
+                dialogue.style.display = 'block';
+                setTimeout(() => {
+                    dialogue.style.display = 'none';
+                }, 5000); // Disparaît après 5 secondes
+            } else {
+                dialogue.style.display = 'none';
+            }
+        }
     </script>
-  </body>
+</body>
 </html>
